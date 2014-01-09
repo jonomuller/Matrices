@@ -1,0 +1,521 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AF6C18FB187E22300031A5DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6C18FA187E22300031A5DF /* Foundation.framework */; };
+		AF6C18FD187E22300031A5DF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6C18FC187E22300031A5DF /* CoreGraphics.framework */; };
+		AF6C18FF187E22300031A5DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6C18FE187E22300031A5DF /* UIKit.framework */; };
+		AF6C1905187E22300031A5DF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AF6C1903187E22300031A5DF /* InfoPlist.strings */; };
+		AF6C1907187E22300031A5DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1906187E22300031A5DF /* main.m */; };
+		AF6C190B187E22300031A5DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C190A187E22300031A5DF /* AppDelegate.m */; };
+		AF6C190E187E22300031A5DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF6C190C187E22300031A5DF /* Main.storyboard */; };
+		AF6C1913187E22300031A5DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF6C1912187E22300031A5DF /* Images.xcassets */; };
+		AF6C191A187E22300031A5DF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6C1919187E22300031A5DF /* XCTest.framework */; };
+		AF6C191B187E22300031A5DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6C18FA187E22300031A5DF /* Foundation.framework */; };
+		AF6C191C187E22300031A5DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6C18FE187E22300031A5DF /* UIKit.framework */; };
+		AF6C1924187E22300031A5DF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AF6C1922187E22300031A5DF /* InfoPlist.strings */; };
+		AF6C1926187E22300031A5DF /* MatricesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1925187E22300031A5DF /* MatricesTests.m */; };
+		AF6C193B187E22760031A5DF /* CalculateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1930187E22760031A5DF /* CalculateViewController.m */; };
+		AF6C193C187E22760031A5DF /* ListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1932187E22760031A5DF /* ListTableViewController.m */; };
+		AF6C193D187E22760031A5DF /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1934187E22760031A5DF /* MasterViewController.m */; };
+		AF6C193E187E22760031A5DF /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1936187E22760031A5DF /* Matrix.m */; };
+		AF6C193F187E22760031A5DF /* MatrixTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1938187E22760031A5DF /* MatrixTableViewController.m */; };
+		AF6C1940187E22760031A5DF /* OperationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C193A187E22760031A5DF /* OperationTableViewController.m */; };
+		AF6C1944187E23550031A5DF /* leftBracket.png in Resources */ = {isa = PBXBuildFile; fileRef = AF6C1942187E23550031A5DF /* leftBracket.png */; };
+		AF6C1945187E23550031A5DF /* rightBracket.png in Resources */ = {isa = PBXBuildFile; fileRef = AF6C1943187E23550031A5DF /* rightBracket.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AF6C191D187E22300031A5DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF6C18EF187E22300031A5DF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AF6C18F6187E22300031A5DF;
+			remoteInfo = Matrices;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AF6C18F7187E22300031A5DF /* Matrices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matrices.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF6C18FA187E22300031A5DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AF6C18FC187E22300031A5DF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		AF6C18FE187E22300031A5DF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		AF6C1902187E22300031A5DF /* Matrices-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Matrices-Info.plist"; sourceTree = "<group>"; };
+		AF6C1904187E22300031A5DF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AF6C1906187E22300031A5DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AF6C1908187E22300031A5DF /* Matrices-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Matrices-Prefix.pch"; sourceTree = "<group>"; };
+		AF6C1909187E22300031A5DF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		AF6C190A187E22300031A5DF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AF6C190D187E22300031A5DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AF6C1912187E22300031A5DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		AF6C1918187E22300031A5DF /* MatricesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MatricesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF6C1919187E22300031A5DF /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		AF6C1921187E22300031A5DF /* MatricesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MatricesTests-Info.plist"; sourceTree = "<group>"; };
+		AF6C1923187E22300031A5DF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AF6C1925187E22300031A5DF /* MatricesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatricesTests.m; sourceTree = "<group>"; };
+		AF6C192F187E22760031A5DF /* CalculateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculateViewController.h; sourceTree = "<group>"; };
+		AF6C1930187E22760031A5DF /* CalculateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculateViewController.m; sourceTree = "<group>"; };
+		AF6C1931187E22760031A5DF /* ListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTableViewController.h; sourceTree = "<group>"; };
+		AF6C1932187E22760031A5DF /* ListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTableViewController.m; sourceTree = "<group>"; };
+		AF6C1933187E22760031A5DF /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		AF6C1934187E22760031A5DF /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		AF6C1935187E22760031A5DF /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		AF6C1936187E22760031A5DF /* Matrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Matrix.m; sourceTree = "<group>"; };
+		AF6C1937187E22760031A5DF /* MatrixTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatrixTableViewController.h; sourceTree = "<group>"; };
+		AF6C1938187E22760031A5DF /* MatrixTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixTableViewController.m; sourceTree = "<group>"; };
+		AF6C1939187E22760031A5DF /* OperationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperationTableViewController.h; sourceTree = "<group>"; };
+		AF6C193A187E22760031A5DF /* OperationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OperationTableViewController.m; sourceTree = "<group>"; };
+		AF6C1942187E23550031A5DF /* leftBracket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftBracket.png; sourceTree = "<group>"; };
+		AF6C1943187E23550031A5DF /* rightBracket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightBracket.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AF6C18F4187E22300031A5DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF6C18FD187E22300031A5DF /* CoreGraphics.framework in Frameworks */,
+				AF6C18FF187E22300031A5DF /* UIKit.framework in Frameworks */,
+				AF6C18FB187E22300031A5DF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF6C1915187E22300031A5DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF6C191A187E22300031A5DF /* XCTest.framework in Frameworks */,
+				AF6C191C187E22300031A5DF /* UIKit.framework in Frameworks */,
+				AF6C191B187E22300031A5DF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AF6C18EE187E22300031A5DF = {
+			isa = PBXGroup;
+			children = (
+				AF6C1900187E22300031A5DF /* Matrices */,
+				AF6C191F187E22300031A5DF /* MatricesTests */,
+				AF6C18F9187E22300031A5DF /* Frameworks */,
+				AF6C18F8187E22300031A5DF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AF6C18F8187E22300031A5DF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AF6C18F7187E22300031A5DF /* Matrices.app */,
+				AF6C1918187E22300031A5DF /* MatricesTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AF6C18F9187E22300031A5DF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AF6C18FA187E22300031A5DF /* Foundation.framework */,
+				AF6C18FC187E22300031A5DF /* CoreGraphics.framework */,
+				AF6C18FE187E22300031A5DF /* UIKit.framework */,
+				AF6C1919187E22300031A5DF /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AF6C1900187E22300031A5DF /* Matrices */ = {
+			isa = PBXGroup;
+			children = (
+				AF6C1909187E22300031A5DF /* AppDelegate.h */,
+				AF6C190A187E22300031A5DF /* AppDelegate.m */,
+				AF6C1935187E22760031A5DF /* Matrix.h */,
+				AF6C1936187E22760031A5DF /* Matrix.m */,
+				AF6C190C187E22300031A5DF /* Main.storyboard */,
+				AF6C1933187E22760031A5DF /* MasterViewController.h */,
+				AF6C1934187E22760031A5DF /* MasterViewController.m */,
+				AF6C1931187E22760031A5DF /* ListTableViewController.h */,
+				AF6C1932187E22760031A5DF /* ListTableViewController.m */,
+				AF6C1937187E22760031A5DF /* MatrixTableViewController.h */,
+				AF6C1938187E22760031A5DF /* MatrixTableViewController.m */,
+				AF6C1939187E22760031A5DF /* OperationTableViewController.h */,
+				AF6C193A187E22760031A5DF /* OperationTableViewController.m */,
+				AF6C192F187E22760031A5DF /* CalculateViewController.h */,
+				AF6C1930187E22760031A5DF /* CalculateViewController.m */,
+				AF6C1912187E22300031A5DF /* Images.xcassets */,
+				AF6C1941187E23550031A5DF /* Images */,
+				AF6C1901187E22300031A5DF /* Supporting Files */,
+			);
+			path = Matrices;
+			sourceTree = "<group>";
+		};
+		AF6C1901187E22300031A5DF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AF6C1902187E22300031A5DF /* Matrices-Info.plist */,
+				AF6C1903187E22300031A5DF /* InfoPlist.strings */,
+				AF6C1906187E22300031A5DF /* main.m */,
+				AF6C1908187E22300031A5DF /* Matrices-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AF6C191F187E22300031A5DF /* MatricesTests */ = {
+			isa = PBXGroup;
+			children = (
+				AF6C1925187E22300031A5DF /* MatricesTests.m */,
+				AF6C1920187E22300031A5DF /* Supporting Files */,
+			);
+			path = MatricesTests;
+			sourceTree = "<group>";
+		};
+		AF6C1920187E22300031A5DF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AF6C1921187E22300031A5DF /* MatricesTests-Info.plist */,
+				AF6C1922187E22300031A5DF /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AF6C1941187E23550031A5DF /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				AF6C1942187E23550031A5DF /* leftBracket.png */,
+				AF6C1943187E23550031A5DF /* rightBracket.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AF6C18F6187E22300031A5DF /* Matrices */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF6C1929187E22300031A5DF /* Build configuration list for PBXNativeTarget "Matrices" */;
+			buildPhases = (
+				AF6C18F3187E22300031A5DF /* Sources */,
+				AF6C18F4187E22300031A5DF /* Frameworks */,
+				AF6C18F5187E22300031A5DF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Matrices;
+			productName = Matrices;
+			productReference = AF6C18F7187E22300031A5DF /* Matrices.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AF6C1917187E22300031A5DF /* MatricesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF6C192C187E22300031A5DF /* Build configuration list for PBXNativeTarget "MatricesTests" */;
+			buildPhases = (
+				AF6C1914187E22300031A5DF /* Sources */,
+				AF6C1915187E22300031A5DF /* Frameworks */,
+				AF6C1916187E22300031A5DF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AF6C191E187E22300031A5DF /* PBXTargetDependency */,
+			);
+			name = MatricesTests;
+			productName = MatricesTests;
+			productReference = AF6C1918187E22300031A5DF /* MatricesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AF6C18EF187E22300031A5DF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Jonathan Muller";
+				TargetAttributes = {
+					AF6C1917187E22300031A5DF = {
+						TestTargetID = AF6C18F6187E22300031A5DF;
+					};
+				};
+			};
+			buildConfigurationList = AF6C18F2187E22300031A5DF /* Build configuration list for PBXProject "Matrices" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AF6C18EE187E22300031A5DF;
+			productRefGroup = AF6C18F8187E22300031A5DF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AF6C18F6187E22300031A5DF /* Matrices */,
+				AF6C1917187E22300031A5DF /* MatricesTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AF6C18F5187E22300031A5DF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF6C1913187E22300031A5DF /* Images.xcassets in Resources */,
+				AF6C1944187E23550031A5DF /* leftBracket.png in Resources */,
+				AF6C1905187E22300031A5DF /* InfoPlist.strings in Resources */,
+				AF6C1945187E23550031A5DF /* rightBracket.png in Resources */,
+				AF6C190E187E22300031A5DF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF6C1916187E22300031A5DF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF6C1924187E22300031A5DF /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AF6C18F3187E22300031A5DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF6C193B187E22760031A5DF /* CalculateViewController.m in Sources */,
+				AF6C1940187E22760031A5DF /* OperationTableViewController.m in Sources */,
+				AF6C190B187E22300031A5DF /* AppDelegate.m in Sources */,
+				AF6C193E187E22760031A5DF /* Matrix.m in Sources */,
+				AF6C193F187E22760031A5DF /* MatrixTableViewController.m in Sources */,
+				AF6C193D187E22760031A5DF /* MasterViewController.m in Sources */,
+				AF6C1907187E22300031A5DF /* main.m in Sources */,
+				AF6C193C187E22760031A5DF /* ListTableViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF6C1914187E22300031A5DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF6C1926187E22300031A5DF /* MatricesTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AF6C191E187E22300031A5DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AF6C18F6187E22300031A5DF /* Matrices */;
+			targetProxy = AF6C191D187E22300031A5DF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AF6C1903187E22300031A5DF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AF6C1904187E22300031A5DF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		AF6C190C187E22300031A5DF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AF6C190D187E22300031A5DF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AF6C1922187E22300031A5DF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AF6C1923187E22300031A5DF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AF6C1927187E22300031A5DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AF6C1928187E22300031A5DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AF6C192A187E22300031A5DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Matrices/Matrices-Prefix.pch";
+				INFOPLIST_FILE = "Matrices/Matrices-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		AF6C192B187E22300031A5DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Matrices/Matrices-Prefix.pch";
+				INFOPLIST_FILE = "Matrices/Matrices-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		AF6C192D187E22300031A5DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Matrices.app/Matrices";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Matrices/Matrices-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "MatricesTests/MatricesTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		AF6C192E187E22300031A5DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Matrices.app/Matrices";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Matrices/Matrices-Prefix.pch";
+				INFOPLIST_FILE = "MatricesTests/MatricesTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AF6C18F2187E22300031A5DF /* Build configuration list for PBXProject "Matrices" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF6C1927187E22300031A5DF /* Debug */,
+				AF6C1928187E22300031A5DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AF6C1929187E22300031A5DF /* Build configuration list for PBXNativeTarget "Matrices" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF6C192A187E22300031A5DF /* Debug */,
+				AF6C192B187E22300031A5DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AF6C192C187E22300031A5DF /* Build configuration list for PBXNativeTarget "MatricesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF6C192D187E22300031A5DF /* Debug */,
+				AF6C192E187E22300031A5DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AF6C18EF187E22300031A5DF /* Project object */;
+}
