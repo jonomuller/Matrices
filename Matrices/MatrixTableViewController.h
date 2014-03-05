@@ -18,19 +18,13 @@
 @interface MatrixTableViewController : UITableViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) id <MatrixTableViewDelegate> delegate;
-@property (nonatomic) BOOL fromButton;
+@property (nonatomic) BOOL fromButton, valid;
 
-@property (strong, nonatomic) NSMutableArray *rowsInSection;
-@property (strong, nonatomic) NSMutableArray *headers;
+@property (strong, nonatomic) NSMutableArray *rowsInSection, *headers, *matrices;
 @property (strong, nonatomic) UIAlertView *alert;
-@property (strong, nonatomic) NSMutableArray *matrices;
 @property (nonatomic) NSInteger indexPathRow;
 
-@property (strong, nonatomic) IBOutlet UITextField *textField1, *textField2;
-
-@property (strong, nonatomic) IBOutlet UITextField *textField3, *textField4, *textField5, *textField6, *textField7, *textField8, *textField9, *textField10, *textField11;
-
-@property (strong, nonatomic) IBOutlet UITextField *nameTextField;
+@property (strong, nonatomic) IBOutlet UITextField *textField1, *textField2, *textField3, *textField4, *textField5, *textField6, *textField7, *textField8, *textField9, *textField10, *textField11, *nameTextField;
 
 @property (strong, nonatomic) IBOutlet UIImageView *leftBracket, *rightBracket;
 

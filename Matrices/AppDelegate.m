@@ -10,9 +10,16 @@
 
 @implementation AppDelegate
 
+@synthesize matrices;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    if (!matrices) {
+        matrices = [[NSMutableArray alloc] init];
+    }
+    
     return YES;
 }
 							

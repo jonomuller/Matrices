@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>CB76B414-B421-4DBB-A699-2FBF73B5B146</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Matrices</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>332F5114-BECA-48F8-A1A4-3257873A0352</key>
+		<string>https://github.com/jonomuller/Matrices.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Matrices.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>332F5114-BECA-48F8-A1A4-3257873A0352</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/jonomuller/Matrices.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>332F5114-BECA-48F8-A1A4-3257873A0352</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>332F5114-BECA-48F8-A1A4-3257873A0352</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Matrices</string>
+		</dict>
+	</array>
+</dict>
+</plist>

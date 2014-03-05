@@ -12,6 +12,9 @@
 @protocol OperationViewDelegate <NSObject>
 
 - (void)passBackOperation:(NSString *)operation;
+- (void)passBackOperationIndex:(NSInteger)index;
+- (void)passBackFirstIndex:(NSInteger)row;
+- (void)passBackSecondIndex:(NSInteger)row;
 
 @end
 
@@ -19,17 +22,13 @@
 
 @property (weak, nonatomic) id <OperationViewDelegate> delegate;
 
-@property (strong, nonatomic) IBOutlet UIPickerView *listOfOperations;
-@property (strong, nonatomic) IBOutlet UIPickerView *listOfMatrices;
+@property (strong, nonatomic) IBOutlet UIPickerView *listOfOperations, *listOfMatrices;
 
-@property (strong, nonatomic) NSMutableArray *operations;
-@property (strong, nonatomic) NSString *selectedOperation;
-@property (strong, nonatomic) NSString *operationTitle;
-@property (strong, nonatomic) NSString *matricesTitle;
-
-@property (strong, nonatomic) NSMutableArray *matrices;
-@property (strong, nonatomic) NSMutableArray *names;
+@property (strong, nonatomic) NSMutableArray *operations, *matrices, *names;;
+@property (strong, nonatomic) NSString *selectedOperation, *operationTitle;
 
 @property (strong, nonatomic) NSMutableArray *headers;
+
+@property (nonatomic) NSInteger operationIndex, firstMatrixIndex, secondMatrixIndex;
 
 @end

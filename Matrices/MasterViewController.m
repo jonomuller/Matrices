@@ -14,7 +14,7 @@
 
 @implementation MasterViewController
 
-@synthesize options, selectedOperation, matrices;
+@synthesize options, selectedOperation, matrices, operationIndex, firstMatrixIndex, secondMatrixIndex;;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -29,20 +29,18 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
     self.title = @"Home";
     
-    options = [[NSMutableArray alloc] initWithObjects:@"Initialise matrices", @"Operation", @"Calculate", nil];
+    options = [[NSMutableArray alloc] initWithObjects:@"Matrices", @"Operation", @"Calculate", nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tableView reloadData];
+    
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    matrices = appDelegate.matrices;
+    NSLog(@"%@", matrices);
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,26 +94,36 @@
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-    ListTableViewController *controller1 = [storyboard instantiateViewControllerWithIdentifier:@"controller1"];
-    OperationTableViewController *controller2 = [storyboard instantiateViewControllerWithIdentifier:@"controller2"];
-    CalculateViewController *controller3 = [storyboard instantiateViewControllerWithIdentifier:@"controller3"];
+    ListTableViewController *controller1 = [storyboard instantiateViewControllerWithIdentifier:@"controller2"];
+    OperationTableViewController *controller2 = [storyboard instantiateViewControllerWithIdentifier:@"controller3"];
+    CalculateTableViewController *controller3 = [storyboard instantiateViewControllerWithIdentifier:@"controller4"];
     
     switch (indexPath.row) {
         case 0:
             controller1.title = [options objectAtIndex:0];
             controller1.delegate = self;
             controller1.matrices = matrices;
+            controller1.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller1 animated:YES];
             break;
         case 1:
             controller2.title = [options objectAtIndex:1];
             controller2.delegate = self;
             controller2.selectedOperation = selectedOperation;
+            controller2.operationIndex = operationIndex;
+            controller2.firstMatrixIndex = firstMatrixIndex;
+            controller2.secondMatrixIndex = secondMatrixIndex;
             controller2.matrices = matrices;
+            controller2.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller2 animated:YES];
             break;
         case 2:
             controller3.title = [options objectAtIndex:2];
+            controller3.operationIndex = operationIndex;
+            controller3.firstMatrixIndex = firstMatrixIndex;
+            controller3.secondMatrixIndex = secondMatrixIndex;
+            controller3.matrices = matrices;
+            controller3.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller3 animated:YES];
             break;
         default:
@@ -166,6 +174,22 @@
 {
     selectedOperation = operation;
 }
+
+- (void)passBackOperationIndex:(NSInteger)index
+{
+    operationIndex = index;
+}
+
+- (void)passBackFirstIndex:(NSInteger)row
+{
+    firstMatrixIndex = row;
+}
+
+- (void)passBackSecondIndex:(NSInteger)row
+{
+    secondMatrixIndex = row;
+}
+
 
 - (void)passBackMatricesArray:(NSMutableArray *)array
 {

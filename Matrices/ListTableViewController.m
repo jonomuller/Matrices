@@ -46,9 +46,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tableView reloadData];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    MatrixTableViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"controller1"];
-    controller.delegate = self;
     [self.delegate passBackMatricesArray:matrices];
 }
 
@@ -82,7 +79,7 @@
     matrix = [matrices objectAtIndex:indexPath.row];
     
     cell.textLabel.text = matrix.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ x %@", matrix.row, matrix.column];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d x %d", matrix.row, matrix.column];
     
     return cell;
 }

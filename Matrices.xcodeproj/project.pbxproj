@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF1715CF18C6960500D10664 /* baritem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AF1715CD18C6960500D10664 /* baritem@2x.png */; };
+		AF1715D018C6960500D10664 /* baritem2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AF1715CE18C6960500D10664 /* baritem2@2x.png */; };
+		AF1715D218C6961000D10664 /* detBracket.png in Resources */ = {isa = PBXBuildFile; fileRef = AF1715D118C6961000D10664 /* detBracket.png */; };
+		AF1715E318C6965D00D10664 /* CalculateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1715D418C6965D00D10664 /* CalculateTableViewController.m */; };
+		AF1715E418C6965D00D10664 /* EnterTransformationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1715D618C6965D00D10664 /* EnterTransformationTableViewController.m */; };
+		AF1715E518C6965D00D10664 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1715D818C6965D00D10664 /* GraphView.m */; };
+		AF1715E618C6965D00D10664 /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1715DA18C6965D00D10664 /* GraphViewController.m */; };
+		AF1715E718C6965D00D10664 /* OutputTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1715DC18C6965D00D10664 /* OutputTableViewController.m */; };
+		AF1715E818C6965D00D10664 /* SelectTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1715DE18C6965D00D10664 /* SelectTableViewController.m */; };
+		AF1715E918C6965D00D10664 /* TransformationListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1715E018C6965D00D10664 /* TransformationListTableViewController.m */; };
+		AF1715EA18C6965D00D10664 /* TransformationMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1715E218C6965D00D10664 /* TransformationMasterViewController.m */; };
 		AF6C18FB187E22300031A5DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6C18FA187E22300031A5DF /* Foundation.framework */; };
 		AF6C18FD187E22300031A5DF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6C18FC187E22300031A5DF /* CoreGraphics.framework */; };
 		AF6C18FF187E22300031A5DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6C18FE187E22300031A5DF /* UIKit.framework */; };
@@ -20,7 +31,6 @@
 		AF6C191C187E22300031A5DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF6C18FE187E22300031A5DF /* UIKit.framework */; };
 		AF6C1924187E22300031A5DF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AF6C1922187E22300031A5DF /* InfoPlist.strings */; };
 		AF6C1926187E22300031A5DF /* MatricesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1925187E22300031A5DF /* MatricesTests.m */; };
-		AF6C193B187E22760031A5DF /* CalculateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1930187E22760031A5DF /* CalculateViewController.m */; };
 		AF6C193C187E22760031A5DF /* ListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1932187E22760031A5DF /* ListTableViewController.m */; };
 		AF6C193D187E22760031A5DF /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1934187E22760031A5DF /* MasterViewController.m */; };
 		AF6C193E187E22760031A5DF /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6C1936187E22760031A5DF /* Matrix.m */; };
@@ -41,6 +51,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AF1715CD18C6960500D10664 /* baritem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "baritem@2x.png"; sourceTree = "<group>"; };
+		AF1715CE18C6960500D10664 /* baritem2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "baritem2@2x.png"; sourceTree = "<group>"; };
+		AF1715D118C6961000D10664 /* detBracket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detBracket.png; sourceTree = "<group>"; };
+		AF1715D318C6965D00D10664 /* CalculateTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculateTableViewController.h; sourceTree = "<group>"; };
+		AF1715D418C6965D00D10664 /* CalculateTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculateTableViewController.m; sourceTree = "<group>"; };
+		AF1715D518C6965D00D10664 /* EnterTransformationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterTransformationTableViewController.h; sourceTree = "<group>"; };
+		AF1715D618C6965D00D10664 /* EnterTransformationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterTransformationTableViewController.m; sourceTree = "<group>"; };
+		AF1715D718C6965D00D10664 /* GraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
+		AF1715D818C6965D00D10664 /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
+		AF1715D918C6965D00D10664 /* GraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphViewController.h; sourceTree = "<group>"; };
+		AF1715DA18C6965D00D10664 /* GraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphViewController.m; sourceTree = "<group>"; };
+		AF1715DB18C6965D00D10664 /* OutputTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputTableViewController.h; sourceTree = "<group>"; };
+		AF1715DC18C6965D00D10664 /* OutputTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutputTableViewController.m; sourceTree = "<group>"; };
+		AF1715DD18C6965D00D10664 /* SelectTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectTableViewController.h; sourceTree = "<group>"; };
+		AF1715DE18C6965D00D10664 /* SelectTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectTableViewController.m; sourceTree = "<group>"; };
+		AF1715DF18C6965D00D10664 /* TransformationListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformationListTableViewController.h; sourceTree = "<group>"; };
+		AF1715E018C6965D00D10664 /* TransformationListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformationListTableViewController.m; sourceTree = "<group>"; };
+		AF1715E118C6965D00D10664 /* TransformationMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformationMasterViewController.h; sourceTree = "<group>"; };
+		AF1715E218C6965D00D10664 /* TransformationMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformationMasterViewController.m; sourceTree = "<group>"; };
 		AF6C18F7187E22300031A5DF /* Matrices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matrices.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF6C18FA187E22300031A5DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AF6C18FC187E22300031A5DF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -58,8 +87,6 @@
 		AF6C1921187E22300031A5DF /* MatricesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MatricesTests-Info.plist"; sourceTree = "<group>"; };
 		AF6C1923187E22300031A5DF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AF6C1925187E22300031A5DF /* MatricesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatricesTests.m; sourceTree = "<group>"; };
-		AF6C192F187E22760031A5DF /* CalculateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculateViewController.h; sourceTree = "<group>"; };
-		AF6C1930187E22760031A5DF /* CalculateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculateViewController.m; sourceTree = "<group>"; };
 		AF6C1931187E22760031A5DF /* ListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTableViewController.h; sourceTree = "<group>"; };
 		AF6C1932187E22760031A5DF /* ListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTableViewController.m; sourceTree = "<group>"; };
 		AF6C1933187E22760031A5DF /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
@@ -135,6 +162,8 @@
 				AF6C190A187E22300031A5DF /* AppDelegate.m */,
 				AF6C1935187E22760031A5DF /* Matrix.h */,
 				AF6C1936187E22760031A5DF /* Matrix.m */,
+				AF1715DF18C6965D00D10664 /* TransformationListTableViewController.h */,
+				AF1715E018C6965D00D10664 /* TransformationListTableViewController.m */,
 				AF6C190C187E22300031A5DF /* Main.storyboard */,
 				AF6C1933187E22760031A5DF /* MasterViewController.h */,
 				AF6C1934187E22760031A5DF /* MasterViewController.m */,
@@ -144,8 +173,20 @@
 				AF6C1938187E22760031A5DF /* MatrixTableViewController.m */,
 				AF6C1939187E22760031A5DF /* OperationTableViewController.h */,
 				AF6C193A187E22760031A5DF /* OperationTableViewController.m */,
-				AF6C192F187E22760031A5DF /* CalculateViewController.h */,
-				AF6C1930187E22760031A5DF /* CalculateViewController.m */,
+				AF1715D318C6965D00D10664 /* CalculateTableViewController.h */,
+				AF1715D418C6965D00D10664 /* CalculateTableViewController.m */,
+				AF1715E118C6965D00D10664 /* TransformationMasterViewController.h */,
+				AF1715E218C6965D00D10664 /* TransformationMasterViewController.m */,
+				AF1715D518C6965D00D10664 /* EnterTransformationTableViewController.h */,
+				AF1715D618C6965D00D10664 /* EnterTransformationTableViewController.m */,
+				AF1715DD18C6965D00D10664 /* SelectTableViewController.h */,
+				AF1715DE18C6965D00D10664 /* SelectTableViewController.m */,
+				AF1715DB18C6965D00D10664 /* OutputTableViewController.h */,
+				AF1715DC18C6965D00D10664 /* OutputTableViewController.m */,
+				AF1715D718C6965D00D10664 /* GraphView.h */,
+				AF1715D818C6965D00D10664 /* GraphView.m */,
+				AF1715D918C6965D00D10664 /* GraphViewController.h */,
+				AF1715DA18C6965D00D10664 /* GraphViewController.m */,
 				AF6C1912187E22300031A5DF /* Images.xcassets */,
 				AF6C1941187E23550031A5DF /* Images */,
 				AF6C1901187E22300031A5DF /* Supporting Files */,
@@ -187,6 +228,9 @@
 			children = (
 				AF6C1942187E23550031A5DF /* leftBracket.png */,
 				AF6C1943187E23550031A5DF /* rightBracket.png */,
+				AF1715CD18C6960500D10664 /* baritem@2x.png */,
+				AF1715CE18C6960500D10664 /* baritem2@2x.png */,
+				AF1715D118C6961000D10664 /* detBracket.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -235,7 +279,7 @@
 		AF6C18EF187E22300031A5DF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Jonathan Muller";
 				TargetAttributes = {
 					AF6C1917187E22300031A5DF = {
@@ -268,8 +312,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF6C1913187E22300031A5DF /* Images.xcassets in Resources */,
+				AF1715CF18C6960500D10664 /* baritem@2x.png in Resources */,
+				AF1715D218C6961000D10664 /* detBracket.png in Resources */,
 				AF6C1944187E23550031A5DF /* leftBracket.png in Resources */,
 				AF6C1905187E22300031A5DF /* InfoPlist.strings in Resources */,
+				AF1715D018C6960500D10664 /* baritem2@2x.png in Resources */,
 				AF6C1945187E23550031A5DF /* rightBracket.png in Resources */,
 				AF6C190E187E22300031A5DF /* Main.storyboard in Resources */,
 			);
@@ -290,13 +337,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF6C193B187E22760031A5DF /* CalculateViewController.m in Sources */,
 				AF6C1940187E22760031A5DF /* OperationTableViewController.m in Sources */,
+				AF1715E518C6965D00D10664 /* GraphView.m in Sources */,
+				AF1715E918C6965D00D10664 /* TransformationListTableViewController.m in Sources */,
+				AF1715E418C6965D00D10664 /* EnterTransformationTableViewController.m in Sources */,
 				AF6C190B187E22300031A5DF /* AppDelegate.m in Sources */,
 				AF6C193E187E22760031A5DF /* Matrix.m in Sources */,
+				AF1715E618C6965D00D10664 /* GraphViewController.m in Sources */,
 				AF6C193F187E22760031A5DF /* MatrixTableViewController.m in Sources */,
 				AF6C193D187E22760031A5DF /* MasterViewController.m in Sources */,
 				AF6C1907187E22300031A5DF /* main.m in Sources */,
+				AF1715E818C6965D00D10664 /* SelectTableViewController.m in Sources */,
+				AF1715EA18C6965D00D10664 /* TransformationMasterViewController.m in Sources */,
+				AF1715E318C6965D00D10664 /* CalculateTableViewController.m in Sources */,
+				AF1715E718C6965D00D10664 /* OutputTableViewController.m in Sources */,
 				AF6C193C187E22760031A5DF /* ListTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,7 +405,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -390,7 +443,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -448,7 +500,6 @@
 		AF6C192D187E22300031A5DF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Matrices.app/Matrices";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -471,7 +522,6 @@
 		AF6C192E187E22300031A5DF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Matrices.app/Matrices";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -506,6 +556,7 @@
 				AF6C192B187E22300031A5DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AF6C192C187E22300031A5DF /* Build configuration list for PBXNativeTarget "MatricesTests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +565,7 @@
 				AF6C192E187E22300031A5DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

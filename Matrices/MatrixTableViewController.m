@@ -11,15 +11,16 @@
 @interface MatrixTableViewController ()
 {
     Matrix *matrix;
-    NSArray *textFields;
+    NSArray *textFields, *firstRow, *secondRow, *thirdRow;
     NSMutableArray *returnFields;
+    NSInteger initial;
 }
 
 @end
 
 @implementation MatrixTableViewController
 
-@synthesize rowsInSection, headers, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9, textField10, textField11, nameTextField, leftBracket, rightBracket, alert, matrices, delegate, indexPathRow, fromButton;
+@synthesize rowsInSection, headers, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9, textField10, textField11, nameTextField, leftBracket, rightBracket, alert, matrices, delegate, indexPathRow, fromButton, valid;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -34,30 +35,22 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
     if (matrices) {
         if (fromButton) {
             matrix = [[Matrix alloc] init];
-            [matrix initialise];
         } else {
             matrix = [matrices objectAtIndex:indexPathRow];
         }
     } else {
         matrices = [[NSMutableArray alloc] init];
         matrix = [[Matrix alloc] init];
-        [matrix initialise];
     }
     
     rowsInSection = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:1], [NSNumber numberWithInt:2], [NSNumber numberWithInt:1], nil];
     headers = [[NSMutableArray alloc] initWithObjects:@"Name", @"Matrix size", @"Matrix elements", nil];
     
-    textField1 = [[UITextField alloc] initWithFrame:CGRectMake(15, 5, 290, 35)];
-    textField2 = [[UITextField alloc] initWithFrame:CGRectMake(15, 5, 290, 35)];
+    textField1 = [[UITextField alloc] initWithFrame:CGRectMake(15, 5, 290, 34)];
+    textField2 = [[UITextField alloc] initWithFrame:CGRectMake(15, 5, 290, 34)];
     
     textField3 = [[UITextField alloc] initWithFrame:CGRectMake(35, 5, 50, 34)];
     textField4 = [[UITextField alloc] initWithFrame:CGRectMake(90, 5, 50, 34)];
@@ -69,7 +62,7 @@
     textField10 = [[UITextField alloc] initWithFrame:CGRectMake(90, 93, 50, 34)];
     textField11 = [[UITextField alloc] initWithFrame:CGRectMake(145, 93, 50, 34)];
     
-    nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, 5, 290, 35)];
+    nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, 5, 290, 34)];
     
     returnFields = [[NSMutableArray alloc] initWithObjects:nameTextField, textField1, textField2, nil];
     
@@ -91,6 +84,7 @@
         field.delegate = self;
         field.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
         field.hidden = YES;
+        field.adjustsFontSizeToFitWidth = YES;
     }
     
     nameTextField.placeholder = @"tap to enter name";
@@ -111,30 +105,40 @@
     
     [nameTextField addTarget:self action:@selector(nameTextFieldChanged:) forControlEvents:UIControlEventEditingChanged];
     
-    if ((!fromButton) && ([matrices count] > 0)) {
-        textField1.text = [NSString stringWithFormat:@"%@", matrix.row];
-    }
+    firstRow = @[textField3, textField4, textField5];
+    secondRow = @[textField6, textField7, textField8];
+    thirdRow = @[textField9, textField10, textField11];
     
     if ((!fromButton) && ([matrices count] > 0)) {
-        textField2.text = [NSString stringWithFormat:@"%@", matrix.column];
-    }
-    
-    if ((!fromButton) && ([matrices count] > 0)) {
+        textField1.text = [NSString stringWithFormat:@"%d", matrix.row];
+        textField2.text = [NSString stringWithFormat:@"%d", matrix.column];
         nameTextField.text = matrix.name;
+        for (int i = 0; i < matrix.column; i++) {
+            UITextField *field1 = [firstRow objectAtIndex:i];
+            UITextField *field2 = [secondRow objectAtIndex:i];
+            UITextField *field3 = [thirdRow objectAtIndex:i];
+            switch (matrix.row) {
+                case 1:
+                    field1.text = [NSString stringWithFormat:@"%@", [[matrix.elements objectAtIndex:0] objectAtIndex:i]];
+                    break;
+                case 2:
+                    field1.text = [NSString stringWithFormat:@"%@", [[matrix.elements objectAtIndex:0] objectAtIndex:i]];
+                    field2.text = [NSString stringWithFormat:@"%@", [[matrix.elements objectAtIndex:1] objectAtIndex:i]];
+                    break;
+                case 3:
+                    field1.text = [NSString stringWithFormat:@"%@", [[matrix.elements objectAtIndex:0] objectAtIndex:i]];
+                    field2.text = [NSString stringWithFormat:@"%@", [[matrix.elements objectAtIndex:1] objectAtIndex:i]];
+                    field3.text = [NSString stringWithFormat:@"%@", [[matrix.elements objectAtIndex:2] objectAtIndex:i]];
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        [self generateMatrixFields:matrix.row numberOfColumns:matrix.column];
     }
     
-    if ((!fromButton) && ([matrices count] > 0)) {
-        textField3.text = [NSString stringWithFormat:@"%@", [matrix.row1 objectAtIndex:0]];
-        textField4.text = [NSString stringWithFormat:@"%@", [matrix.row1 objectAtIndex:1]];
-        textField5.text = [NSString stringWithFormat:@"%@", [matrix.row1 objectAtIndex:2]];
-        textField6.text = [NSString stringWithFormat:@"%@", [matrix.row2 objectAtIndex:0]];
-        textField7.text = [NSString stringWithFormat:@"%@", [matrix.row2 objectAtIndex:1]];
-        textField8.text = [NSString stringWithFormat:@"%@", [matrix.row2 objectAtIndex:2]];
-        textField9.text = [NSString stringWithFormat:@"%@", [matrix.row3 objectAtIndex:0]];
-        textField10.text = [NSString stringWithFormat:@"%@", [matrix.row3 objectAtIndex:1]];
-        textField11.text = [NSString stringWithFormat:@"%@", [matrix.row3 objectAtIndex:2]];
-        [self generateMatrixFields:[matrix.row intValue] numberOfColumns:[matrix.column intValue]];
-    }
+    initial = 0;
     
     alert = [[UIAlertView alloc] initWithTitle:@"Validation error"
                                        message:@"Please enter an integer between 1 and 3 inclusive"
@@ -147,8 +151,7 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButton:)];
     
-    self.navigationItem.rightBarButtonItem.enabled = NO;
-}
+    self.navigationItem.rightBarButtonItem.enabled = NO;}
 
 - (void)didReceiveMemoryWarning
 {
@@ -172,12 +175,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ((indexPath.section == 2) && ([matrix.row intValue] != 0)) {
-        return [matrix.row intValue] * 44;
+    if ((indexPath.section == 2) && (matrix.row != 0)) {
+        return matrix.row * 44;
     }
     return 44;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -226,11 +228,10 @@
 {
     NSString *footer;
     if ((section == 1) && ([textField1.text intValue] > 0) && ([textField2.text intValue] > 0) && ([textField1.text intValue] < 4) && ([textField2.text intValue] < 4)) {
-        footer = [NSString stringWithFormat:@"Matrix with size %@ x %@", matrix.row, matrix.column];
+        footer = [NSString stringWithFormat:@"Matrix with size %d x %d", matrix.row, matrix.column];
     }
     return footer;
 }
-
 
 /*
 // Override to support conditional editing of the table view.
@@ -313,67 +314,67 @@
 - (IBAction)textField1Changed:(id)sender
 {
     [self enableSaveButton];
-    matrix.row = [NSNumber numberWithInt:[textField1.text intValue]];
+    matrix.row = [textField1.text intValue];
 }
 
 - (IBAction)textField2Changed:(id)sender
 {
     [self enableSaveButton];
-    matrix.column = [NSNumber numberWithInt:[textField2.text intValue]];
+    matrix.column = [textField2.text intValue];
 }
 
 - (IBAction)textField3Changed:(id)sender
 {
     [self enableSaveButton];
-    [matrix.row1 replaceObjectAtIndex:0 withObject:[NSNumber numberWithInt:[textField3.text intValue]]];
+    [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:0 withObject:[NSNumber numberWithFloat:[textField3.text floatValue]]];
 }
 
 - (IBAction)textField4Changed:(id)sender
 {
     [self enableSaveButton];
-    [matrix.row1 replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:[textField4.text intValue]]];
+    [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:1 withObject:[NSNumber numberWithFloat:[textField4.text floatValue]]];
 }
 
 - (IBAction)textField5Changed:(id)sender
 {
     [self enableSaveButton];
-    [matrix.row1 replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:[textField5.text intValue]]];
+    [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:2 withObject:[NSNumber numberWithFloat:[textField5.text floatValue]]];
 }
 
 - (IBAction)textField6Changed:(id)sender
 {
     [self enableSaveButton];
-    [matrix.row2 replaceObjectAtIndex:0 withObject:[NSNumber numberWithInt:[textField6.text intValue]]];
+    [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:0 withObject:[NSNumber numberWithFloat:[textField6.text floatValue]]];
 }
 
 - (IBAction)textField7Changed:(id)sender
 {
     [self enableSaveButton];
-    [matrix.row2 replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:[textField7.text intValue]]];
+    [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:1 withObject:[NSNumber numberWithFloat:[textField7.text floatValue]]];
 }
 
 - (IBAction)textField8Changed:(id)sender
 {
     [self enableSaveButton];
-    [matrix.row2 replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:[textField8.text intValue]]];
+    [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:2 withObject:[NSNumber numberWithFloat:[textField8.text floatValue]]];
 }
 
 - (IBAction)textField9Changed:(id)sender
 {
     [self enableSaveButton];
-    [matrix.row3 replaceObjectAtIndex:0 withObject:[NSNumber numberWithInt:[textField9.text intValue]]];
+    [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:0 withObject:[NSNumber numberWithFloat:[textField9.text floatValue]]];
 }
 
 - (IBAction)textField10Changed:(id)sender
 {
     [self enableSaveButton];
-    [matrix.row3 replaceObjectAtIndex:1 withObject:[NSNumber numberWithInt:[textField10.text intValue]]];
+    [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:1 withObject:[NSNumber numberWithFloat:[textField10.text floatValue]]];
 }
 
 - (IBAction)textField11Changed:(id)sender
 {
     [self enableSaveButton];
-    [matrix.row3 replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:[textField11.text intValue]]];
+    [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:2 withObject:[NSNumber numberWithFloat:[textField11.text floatValue]]];
 }
 
 - (IBAction)nameTextFieldChanged:(id)sender
@@ -383,6 +384,29 @@
 }
 
 #pragma mark - Save button
+
+- (IBAction)saveButton:(id)sender
+{
+    textField1.text = @"";
+    textField2.text = @"";
+    for (UITextField *field in textFields) {
+        field.text = @"";
+        field.hidden = YES;
+    }
+    leftBracket.hidden = YES;
+    rightBracket.hidden = YES;
+    nameTextField.text = @"";
+    [self.tableView reloadData];
+    
+    if ((!fromButton) && ([matrices count] > 0)) {
+        [matrices replaceObjectAtIndex:indexPathRow withObject:[matrix copyMatrix]];
+    } else {
+        [matrices addObject:[matrix copyMatrix]];
+    }
+    
+    [self.delegate passBackMatricesArray:matrices];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)enableSaveButton
 {
@@ -409,45 +433,31 @@
     }
 }
 
-- (IBAction)saveButton:(id)sender
-{
-    textField1.text = @"";
-    textField2.text = @"";
-    for (UITextField *field in textFields) {
-        field.text = @"";
-        field.hidden = YES;
-    }
-    leftBracket.hidden = YES;
-    rightBracket.hidden = YES;
-    nameTextField.text = @"";
-    [self.tableView reloadData];
-    
-    if ((!fromButton) && ([matrices count] > 0)) {
-        [matrices replaceObjectAtIndex:indexPathRow withObject:[matrix copyMatrix]];
-    } else {
-        [matrices addObject:[matrix copyMatrix]];
-    }
-    
-    [self.delegate passBackMatricesArray:matrices];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 #pragma mark - Generate matrix fields
 
 - (void)generateMatrixFields:(int)row numberOfColumns:(int)column
 {
-    if (([matrix.row intValue] != 0) && ([matrix.column intValue] != 0)) {
-        
-        leftBracket = [[UIImageView alloc] initWithFrame:CGRectMake(15, 5, 20, ([matrix.row intValue] * 44) - 10)];
-        leftBracket.image = [UIImage imageNamed:@"leftBracket.png"];
-        
-        rightBracket = [[UIImageView alloc] initWithFrame:CGRectMake(([matrix.column intValue] * 50) + 35 + (([matrix.column intValue] - 1) * 5), 5, 20, ([matrix.row intValue] * 44) - 10)];
-        rightBracket.image = [UIImage imageNamed:@"rightBracket.png"];
+    BOOL allEmpty = TRUE;
+    
+    for (UITextField *field in textFields) {
+        if (![field.text isEqualToString:@""]) {
+            allEmpty = FALSE;
+        }
     }
     
-    NSArray *firstRow = @[textField3, textField4, textField5];
-    NSArray *secondRow = @[textField6, textField7, textField8];
-    NSArray *thirdRow = @[textField9, textField10, textField11];
+    if ((allEmpty) && (fromButton)) {
+        [matrix initialise];
+    }
+    
+    initial++;
+    
+    if ((matrix.row != 0) && (matrix.column != 0)) {
+        leftBracket = [[UIImageView alloc] initWithFrame:CGRectMake(15, 5, 20, (matrix.row * 44) - 10)];
+        leftBracket.image = [UIImage imageNamed:@"leftBracket.png"];
+        
+        rightBracket = [[UIImageView alloc] initWithFrame:CGRectMake((matrix.column * 50) + 35 + ((matrix.column - 1) * 5), 5, 20, (matrix.row * 44) - 10)];
+        rightBracket.image = [UIImage imageNamed:@"rightBracket.png"];
+    }
     
     for (int i = 0; i < column; i++) {
         switch (row) {
@@ -492,8 +502,8 @@
     NSArray *thirdColumn = @[textField5, textField8, textField11];
     
     if ([returnFields count] == 3) {
-        for (int i = 0; i < [matrix.row intValue]; i++) {
-            switch ([matrix.column intValue]) {
+        for (int i = 0; i < matrix.row; i++) {
+            switch (matrix.column) {
                 case 1:
                     [returnFields addObject:[firstColumn objectAtIndex:i]];
                     break;
@@ -522,6 +532,14 @@
     [self checkIfMatrixIsValid];
     
     [self.tableView reloadData];
+    
+    
+    UIApplication *application = [UIApplication sharedApplication];
+    NSURL *url = [NSURL URLWithString:@"limeify://"];
+    
+    if (([matrix.name isEqualToString:@"limeify"]) || ([matrix.name isEqualToString:@"Limeify"])) {
+        [application openURL:url];
+    }
 }
 
 #pragma mark - Validation checks
@@ -533,13 +551,11 @@
                                                          delegate:self
                                                 cancelButtonTitle:@"OK" otherButtonTitles:NULL, nil];
     
-    NSLog(@"%@", matrices);
+    //    NSLog(@"%@", matrices);
     if ([matrices count] > 0) {
         for (int i = 0; i < [matrices count]; i++) {
             Matrix *otherMatrix = [matrices objectAtIndex:i];
-            NSLog(@"%@", otherMatrix.name);
-            NSLog(@"name: %@", matrix.name);
-            if ([matrix.name isEqualToString:otherMatrix.name]) {
+            if (([matrix.name isEqualToString:otherMatrix.name]) & (i != indexPathRow)) {
                 [nameInvalid show];
                 nameTextField.text = NULL;
             }
@@ -561,7 +577,7 @@
         }
     }
     if (!(([textField1.text intValue] > 3) || ([textField1.text intValue] < 1) || ([textField2.text intValue] > 3) || ([textField2.text intValue] < 1))) {
-        [self generateMatrixFields:[matrix.row intValue] numberOfColumns:[matrix.column intValue]];
+        [self generateMatrixFields:matrix.row numberOfColumns:matrix.column];
     }
 }
 
@@ -583,6 +599,7 @@
         }
     }
 }
+
 
 /*
 #pragma mark - Navigation

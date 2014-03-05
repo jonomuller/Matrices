@@ -17,7 +17,7 @@
 
 @implementation OperationTableViewController
 
-@synthesize operations, selectedOperation, listOfOperations, listOfMatrices, operationTitle, matricesTitle, delegate, matrices, names, headers;
+@synthesize operations, selectedOperation, listOfOperations, listOfMatrices, operationTitle, delegate, matrices, names, headers, operationIndex, firstMatrixIndex, secondMatrixIndex;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,18 +32,12 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
     operations = [[NSMutableArray alloc] initWithObjects:@"Addition", @"Subtraction", @"Multiplication", @"Find determinant", @"Find inverse", nil];
     
-    listOfOperations = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, 161)];
+    listOfOperations = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, 162)];
     listOfOperations.delegate = self;
     
-    listOfMatrices = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, 161)];
+    listOfMatrices = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, 162)];
     listOfMatrices.delegate = self;
     
     operationTitle = [NSString stringWithFormat:@"Selected operation: %@", selectedOperation];
@@ -61,11 +55,11 @@
         matrix = [[Matrix alloc] init];
     }
     
-    if ([names count] > 0) {
-        matricesTitle = [NSString stringWithFormat:@"%@ %@", [names objectAtIndex:0], [names objectAtIndex:0]];
-    }
-    
     [listOfOperations selectRow:[operations indexOfObject:selectedOperation] inComponent:0 animated:YES];
+    [listOfMatrices selectRow:firstMatrixIndex inComponent:0 animated:YES];
+    if (operationIndex < 3) {
+        [listOfMatrices selectRow:secondMatrixIndex inComponent:2 animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,12 +97,18 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    if (operationIndex > 2) {
+        [headers replaceObjectAtIndex:1 withObject:@"Choose matrix"];
+    } else {
+        [headers replaceObjectAtIndex:1 withObject:@"Choose matrices"];
+    }
+    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 161;
+    return 162;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -121,8 +121,6 @@
     NSString *footer;
     if (section == 0) {
         footer = operationTitle;
-    } else {
-        footer = matricesTitle;
     }
     return footer;
 }
@@ -173,31 +171,71 @@
     if (pickerView == listOfOperations) {
         components = 1;
     } else {
-        components = 2;
+        components = 3;
+        if (operationIndex > 2) {
+            components = 1;
+        }
     }
     return components;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    NSInteger rows;
+    NSInteger rows = 0;
     if (pickerView == listOfOperations) {
         rows = [operations count];
     } else {
-        rows = [names count];
+        if ([names count] != 0) {
+            if (component == 1) {
+                rows = 1;
+            } else {
+                rows = [names count];
+            }
+        }
     }
     return rows;
 }
 
 #pragma mark - Picker View Delegate
 
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+{
+    CGFloat width = 0;
+    if (pickerView == listOfOperations) {
+        width = 300;
+    } else {
+        if (component == 1) {
+            width = 22;
+        } else {
+            width = 135;
+        }
+    }
+    return width;
+}
+
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     NSString *title;
+    NSArray *symbols = @[@"+",@"-",@"x"];
     if (pickerView == listOfOperations) {
         title = [operations objectAtIndex:row];
     } else {
         title = [names objectAtIndex:row];
+        if (([pickerView numberOfComponents] == 3) && (component == 1)) {
+            switch (operationIndex) {
+                case 0:
+                    title = [symbols objectAtIndex:0];
+                    break;
+                case 1:
+                    title = [symbols objectAtIndex:1];
+                    break;
+                case 2:
+                    title = [symbols objectAtIndex:2];
+                    break;
+                default:
+                    break;
+            }
+        }
     }
     return title;
 }
@@ -206,9 +244,21 @@
 {
     if (pickerView == listOfOperations) {
         operationTitle = [NSString stringWithFormat:@"Selected operation: %@", [operations objectAtIndex:row]];
-        [self.delegate passBackOperation:[operations objectAtIndex:row]];
+        selectedOperation = [operations objectAtIndex:row];
+        [self.delegate passBackOperation:selectedOperation];
+        operationIndex = row;
+        [self.delegate passBackOperationIndex:operationIndex];
+        [listOfMatrices reloadAllComponents];
     } else {
-        matricesTitle = [NSString stringWithFormat:@"%@ %@", [names objectAtIndex:row], [names objectAtIndex:row]];
+        if ([names count] != 0) {
+            if (component == 0) {
+                firstMatrixIndex = row;
+                [self.delegate passBackFirstIndex:firstMatrixIndex];
+            } else {
+                secondMatrixIndex = row;
+                [self.delegate passBackSecondIndex:secondMatrixIndex];
+            }
+        }
     }
     [self.tableView reloadData];
 }
