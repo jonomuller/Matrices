@@ -32,9 +32,27 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next step" style:UIBarButtonItemStylePlain target:self action:@selector(nextStep:)];
     
+    self.navigationController.navigationBar.translucent = NO;
+    
     headers = [[NSMutableArray alloc] initWithObjects:@"Matrices", @"Calcuation", @"Final matrix", nil];
     
-    if (operationIndex == 3) {
+    UIAlertView *noMatrices = [[UIAlertView alloc] initWithTitle:@"No matrices found" message:@"Please enter at least one matrix first" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NULL, nil];
+    
+    formatter = [[NSNumberFormatter alloc] init];
+    formatter.usesSignificantDigits = TRUE;
+    formatter.minimumSignificantDigits = 1;
+    formatter.maximumSignificantDigits = 3;
+    
+    if ([matrices count] == 0) {
+        [noMatrices show];
+    } else {
+        firstMatrix = [matrices objectAtIndex:firstMatrixIndex];
+        if (operationIndex < 3) {
+            secondMatrix = [matrices objectAtIndex:secondMatrixIndex];
+        }
+    }
+    
+    if ((operationIndex == 3) || (operationIndex == 5)) {
         headers = [[NSMutableArray alloc] initWithObjects:@"Matrix", @"Calcuation", @"Final answer", nil];
     } else if (operationIndex == 4) {
         if (firstMatrix.row == 3) {
@@ -46,16 +64,12 @@
         headers = [[NSMutableArray alloc] initWithObjects:@"Matrices", @"Calcuation", @"Final matrix", nil];
     }
     
-    UIAlertView *noMatrices = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enter at least one matrix first" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NULL, nil];
-    
     UIAlertView *operationError = [[UIAlertView alloc] initWithTitle:@"Cannot perform operation" message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NULL, nil];
-
-    firstMatrix = [[Matrix alloc] init];
-    secondMatrix = [[Matrix alloc] init];
     
     if (operationIndex == 2) {
-        operationError.message = @"Please make sure the number of columns in matrix A is equal to the number of columns in matrix B";
-        if (!(firstMatrix.column == secondMatrix.row)) {
+        operationError.message = @"Please make sure the number of columns in matrix A is equal to the number of rows in matrix B";
+        NSLog(@"f %d s %d", firstMatrix.column, secondMatrix.row);
+        if (firstMatrix.column != secondMatrix.row) {
             [operationError show];
         }
     } else if (operationIndex < 2) {
@@ -63,13 +77,11 @@
         if (!((firstMatrix.row == secondMatrix.row) && (firstMatrix.column == secondMatrix.column))) {
             [operationError show];
         }
-    }
-    
-    if ([matrices count] == 0) {
-        [noMatrices show];
-    } else {
-        firstMatrix = [matrices objectAtIndex:firstMatrixIndex];
-        secondMatrix = [matrices objectAtIndex:secondMatrixIndex];
+    } else if (operationIndex > 2) {
+        operationError.message = @"Please make sure the matrix is square (has the same number of rows and columns)";
+        if (firstMatrix.row != firstMatrix.column) {
+            [operationError show];
+        }
     }
     
     finalMatrix = [[Matrix alloc] init];
@@ -116,10 +128,10 @@
     rightBracket2 = [[UIImageView alloc] initWithFrame:CGRectMake(164 + ((firstMatrix.column - 1) * 32) + ((secondMatrix.column - 1) * 32), rightMatrixPos, 20, (secondMatrix.row * 32) - 2)];
     rightBracket2.image = [UIImage imageNamed:@"rightBracket.png"];
 
-    leftBracket3 = [[UIImageView alloc] initWithFrame:CGRectMake(10, leftMatrixPos, 20, (finalMatrix.row * 32) - 2)];
+    leftBracket3 = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 20, (finalMatrix.row * 32) - 2)];
     leftBracket3.image = [UIImage imageNamed:@"leftBracket.png"];
     
-    rightBracket3 = [[UIImageView alloc] initWithFrame:CGRectMake(60 + ((finalMatrix.column - 1) * 32), leftMatrixPos, 20, (finalMatrix.row * 32) - 2)];
+    rightBracket3 = [[UIImageView alloc] initWithFrame:CGRectMake(60 + ((finalMatrix.column - 1) * 32), 7, 20, (finalMatrix.row * 32) - 2)];
     rightBracket3.image = [UIImage imageNamed:@"rightBracket.png"];
     
     int opLabelPos = 0;
@@ -167,15 +179,15 @@
     label17 = [[UILabel alloc] initWithFrame:CGRectMake(166 + ((firstMatrix.column - 1) * 32), rightMatrixPos + 64, 30, 30)];
     label18 = [[UILabel alloc] initWithFrame:CGRectMake(198 + ((firstMatrix.column - 1) * 32), rightMatrixPos + 64, 30, 30)];
     
-    label19 = [[UILabel alloc] initWithFrame:CGRectMake(30, leftMatrixPos, 30, 30)];
-    label20 = [[UILabel alloc] initWithFrame:CGRectMake(62, leftMatrixPos, 30, 30)];
-    label21 = [[UILabel alloc] initWithFrame:CGRectMake(94, leftMatrixPos, 30, 30)];
-    label22 = [[UILabel alloc] initWithFrame:CGRectMake(30, leftMatrixPos + 32, 30, 30)];
-    label23 = [[UILabel alloc] initWithFrame:CGRectMake(62, leftMatrixPos + 32, 30, 30)];
-    label24 = [[UILabel alloc] initWithFrame:CGRectMake(94, leftMatrixPos + 32, 30, 30)];
-    label25 = [[UILabel alloc] initWithFrame:CGRectMake(30, leftMatrixPos + 64, 30, 30)];
-    label26 = [[UILabel alloc] initWithFrame:CGRectMake(62, leftMatrixPos + 64, 30, 30)];
-    label27 = [[UILabel alloc] initWithFrame:CGRectMake(94, leftMatrixPos + 64, 30, 30)];
+    label19 = [[UILabel alloc] initWithFrame:CGRectMake(30, 7, 30, 30)];
+    label20 = [[UILabel alloc] initWithFrame:CGRectMake(62, 7, 30, 30)];
+    label21 = [[UILabel alloc] initWithFrame:CGRectMake(94, 7, 30, 30)];
+    label22 = [[UILabel alloc] initWithFrame:CGRectMake(30, 7 + 32, 30, 30)];
+    label23 = [[UILabel alloc] initWithFrame:CGRectMake(62, 7 + 32, 30, 30)];
+    label24 = [[UILabel alloc] initWithFrame:CGRectMake(94, 7 + 32, 30, 30)];
+    label25 = [[UILabel alloc] initWithFrame:CGRectMake(30, 7 + 64, 30, 30)];
+    label26 = [[UILabel alloc] initWithFrame:CGRectMake(62, 7 + 64, 30, 30)];
+    label27 = [[UILabel alloc] initWithFrame:CGRectMake(94, 7 + 64, 30, 30)];
     
     detBracketLeft = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 20, 62)];
     detBracketLeft.image = [UIImage imageNamed:@"detBracket.png"];
@@ -190,7 +202,7 @@
     detBracketRight = [[UIImageView alloc] initWithFrame:CGRectMake(92, 7, 20, 62)];;
     detBracketRight.image = [UIImage imageNamed:@"detBracket.png"];
     
-    NSArray *detLabels = @[detLabel1, detLabel2, detLabel3, detLabel4];
+    detLabels = @[detLabel1, detLabel2, detLabel3, detLabel4];
     
     for (UILabel *label in detLabels) {
         label.textAlignment = NSTextAlignmentCenter;
@@ -384,7 +396,7 @@
     firstRows = @[firstRow, secondRow, thirdRow];
     secondRows = @[firstRow2, secondRow2, thirdRow2];
     
-    if (operationIndex == 3) {
+    if ((operationIndex == 3) || (operationIndex == 5)) {
         for (UILabel *label in secondLabels) {
             label.hidden = YES;
         }
@@ -429,7 +441,7 @@
 {
     CGFloat height = 0.0;
     
-    if (operationIndex == 3) {
+    if ((operationIndex == 3) || (operationIndex == 5)) {
         if (indexPath.section == 0) {
             height = 44 + ((firstMatrix.row - 1) * 32);
         } else if (indexPath.section == 1) {
@@ -456,6 +468,8 @@
             } else {
                 height = 44;
             }
+        } else if (indexPath.section == 2) {
+            height = 44 + ((finalMatrix.row - 1) * 32);
         } else {
             if ([matrices count] > 0) {
                 if (firstMatrix.row > secondMatrix.row) {
@@ -502,7 +516,7 @@
             [cell addSubview:detLabel4];
             [cell addSubview:detBracketRight];
             [cell addSubview:detCalculation];
-            if (currentPos > 17) {
+            if ((currentPos > 17) || (operationIndex == 5)) {
                 cell.textLabel.attributedText = calculationString;
             }
         } else {
@@ -511,7 +525,7 @@
             cell.textLabel.numberOfLines = 0;
         }
     } else {
-        if (operationIndex == 3) {
+        if ((operationIndex == 3) || (operationIndex == 5)) {
             cell.textLabel.attributedText = determinantAnswer;
         } else {
             [cell addSubview:leftBracket3];
@@ -566,6 +580,8 @@
 }
 */
 
+#pragma mark - Next step
+
 - (void)nextStep:(id)sender
 {
     switch (operationIndex) {
@@ -584,10 +600,15 @@
         case 4:
             [self performInverse];
             break;
+        case 5:
+            [self performAlgebra];
+            break;
         default:
             break;
     }
 }
+
+#pragma mark - Calucation methods
 
 - (void)performAdditionOrSubtraction
 {
@@ -638,11 +659,25 @@
 - (void)performMulitplcation
 {
     UILabel *firstColumn1Label = [[firstRows objectAtIndex:currentRow1] objectAtIndex:currentColumn1];
-//    UILabel *firstColumn2Label = [[firstRows objectAtIndex:currentRow1] objectAtIndex:currentColumn1+1];
-//    UILabel *firstColumn3Label = [[firstRows objectAtIndex:currentRow1] objectAtIndex:currentColumn1+2];
+    UILabel *firstColumn2Label, *firstColumn3Label;
+    
+    if (firstMatrix.column == 3) {
+        firstColumn2Label = [[firstRows objectAtIndex:currentRow1] objectAtIndex:currentColumn1+1];
+        firstColumn3Label = [[firstRows objectAtIndex:currentRow1] objectAtIndex:currentColumn1+2];
+    } else if (firstMatrix.column == 2) {
+        firstColumn2Label = [[firstRows objectAtIndex:currentRow1] objectAtIndex:currentColumn1+1];
+    }
+    
     UILabel *secondRow1Label = [[secondRows objectAtIndex:currentRow2] objectAtIndex:currentColumn2];
-//    UILabel *secondRow2Label = [[secondRows objectAtIndex:currentRow2+1] objectAtIndex:currentColumn2];
-//    UILabel *secondRow3Label = [[secondRows objectAtIndex:currentRow2+2] objectAtIndex:currentColumn2];
+    UILabel *secondRow2Label, *secondRow3Label;
+    
+    if (secondMatrix.row == 3) {
+        secondRow2Label = [[secondRows objectAtIndex:currentRow2+1] objectAtIndex:currentColumn2];
+        secondRow3Label = [[secondRows objectAtIndex:currentRow2+2] objectAtIndex:currentColumn2];
+    } else if (secondMatrix.row == 2) {
+        secondRow2Label = [[secondRows objectAtIndex:currentRow2+1] objectAtIndex:currentColumn2];
+    }
+    
     UILabel *finalLabel = [[finalRows objectAtIndex:finalRow] objectAtIndex:finalColumn];
     id currentElement1 = [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:currentColumn1];
     id currentElement2 = [[secondMatrix.elements objectAtIndex:currentRow2] objectAtIndex:currentColumn2];
@@ -664,9 +699,14 @@
     
     NSInteger firstBracketValue = [[NSString stringWithFormat:@"%@", currentElement1] length] + 3 + [[NSString stringWithFormat:@"%@", currentElement2] length];
     
-//    NSInteger secondBracketValue = [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:(currentColumn1+1)]] length] + 3 + [[NSString stringWithFormat:@"%@", [[secondMatrix.elements objectAtIndex:(currentRow2+1)] objectAtIndex:currentColumn2]] length];
+    NSInteger secondBracketValue, thirdBracketValue;
     
-//    NSInteger thirdBracketValue = [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:(currentColumn1+2)]] length] + 3 + [[NSString stringWithFormat:@"%@", [[secondMatrix.elements objectAtIndex:currentRow2+2] objectAtIndex:currentColumn2]] length];
+    if (firstMatrix.column == 3) {
+        thirdBracketValue = [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:(currentColumn1+2)]] length] + 3 + [[NSString stringWithFormat:@"%@", [[secondMatrix.elements objectAtIndex:currentRow2+2] objectAtIndex:currentColumn2]] length];
+        secondBracketValue = [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:(currentColumn1+1)]] length] + 3 + [[NSString stringWithFormat:@"%@", [[secondMatrix.elements objectAtIndex:(currentRow2+1)] objectAtIndex:currentColumn2]] length];
+    } else if (firstMatrix.column == 2) {
+        secondBracketValue = [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:(currentColumn1+1)]] length] + 3 + [[NSString stringWithFormat:@"%@", [[secondMatrix.elements objectAtIndex:(currentRow2+1)] objectAtIndex:currentColumn2]] length];
+    }
     
     if (firstMatrix.column == 1) {
         [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, firstBracketValue)];
@@ -674,13 +714,13 @@
     } else {
         [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(1, firstBracketValue)];
         
-        if (firstMatrix.row == 3) {
-//            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(6 + firstBracketValue, secondBracketValue)];
-//            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(11 + firstBracketValue + secondBracketValue, thirdBracketValue)];
-//            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(15 + firstBracketValue + secondBracketValue + thirdBracketValue, [finalLabel.text length])];
-        } else if (firstMatrix.row == 2) {
-//            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(6 + firstBracketValue, secondBracketValue)];
-//            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(10 + firstBracketValue + secondBracketValue, [finalLabel.text length])];
+        if (firstMatrix.column == 3) {
+            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(6 + firstBracketValue, secondBracketValue)];
+            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(11 + firstBracketValue + secondBracketValue, thirdBracketValue)];
+            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(15 + firstBracketValue + secondBracketValue + thirdBracketValue, [finalLabel.text length])];
+        } else if (firstMatrix.column == 2) {
+            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(6 + firstBracketValue, secondBracketValue)];
+            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(10 + firstBracketValue + secondBracketValue, [finalLabel.text length])];
         }
     }
     
@@ -690,12 +730,12 @@
 
     
     firstColumn1Label.textColor = [UIColor redColor];
-//    firstColumn2Label.textColor = [UIColor greenColor];
-//    firstColumn3Label.textColor = [UIColor orangeColor];
+    firstColumn2Label.textColor = [UIColor greenColor];
+    firstColumn3Label.textColor = [UIColor orangeColor];
     
     secondRow1Label.textColor = [UIColor redColor];
-//    secondRow2Label.textColor = [UIColor greenColor];
-//    secondRow3Label.textColor = [UIColor orangeColor];
+    secondRow2Label.textColor = [UIColor greenColor];
+    secondRow3Label.textColor = [UIColor orangeColor];
     
     finalLabel.textColor = [UIColor blueColor];
 
@@ -723,11 +763,23 @@
 - (void)performDeterminant
 {
     Matrix *detMatrix;
-    if (currentColumn1 < 3) {
+    if ((currentColumn1 < 3) && (firstMatrix.row == 3)) {
         detMatrix = [firstMatrix determinantMatrix:firstMatrix row:0 column:currentColumn1];
     }
     
     Matrix *detMatrix1, *detMatrix2, *detMatrix3;
+    
+    NSInteger firstBracketValue, secondBracketValue, firstDetBracketValue, secondDetBracketValue;
+    
+    if (firstMatrix.row > 1) {
+        firstBracketValue = [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:0] objectAtIndex:0]] length] + 3 + [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:1] objectAtIndex:1]] length];
+        
+        secondBracketValue = [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:0] objectAtIndex:1]] length] + 3 + [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:1] objectAtIndex:0]] length];
+        
+        firstDetBracketValue = [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:0] objectAtIndex:0]] length] + 3 + [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:1]] length];
+        
+        secondDetBracketValue = [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:0] objectAtIndex:1]] length] + 3 + [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:0]] length];
+    }
     
     switch (firstMatrix.row) {
         case 1:
@@ -736,6 +788,15 @@
             break;
         case 2:
             calculationString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"(%@ x %@) - (%@ x %@) = %.2f", [[firstMatrix.elements objectAtIndex:0] objectAtIndex:0], [[firstMatrix.elements objectAtIndex:1] objectAtIndex:1], [[firstMatrix.elements objectAtIndex:0] objectAtIndex:1], [[firstMatrix.elements objectAtIndex:1] objectAtIndex:0], [firstMatrix determinant:firstMatrix]]];
+            
+            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(1, firstBracketValue)];
+            [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(6 + firstBracketValue, secondBracketValue)];
+            
+            label1.textColor = [UIColor redColor];
+            label2.textColor = [UIColor greenColor];
+            label4.textColor = [UIColor greenColor];
+            label5.textColor = [UIColor redColor];
+            
             determinantAnswer = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\u0394 = %.2f", [firstMatrix determinant:firstMatrix]]];
             self.navigationItem.rightBarButtonItem.enabled = NO;
             break;
@@ -748,7 +809,32 @@
                 detLabel2.text = [NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:0] objectAtIndex:1]];
                 detLabel3.text = [NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:0]];
                 detLabel4.text = [NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:1]];
-                detCalculation.attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"= (%@ x %@) - (%@ x %@)\n= %.2f", [[detMatrix.elements objectAtIndex:0] objectAtIndex:0], [[detMatrix.elements objectAtIndex:1] objectAtIndex:1], [[detMatrix.elements objectAtIndex:0] objectAtIndex:1], [[detMatrix.elements objectAtIndex:1] objectAtIndex:0], [detMatrix determinant:detMatrix]]];
+                
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        UILabel *label = [[firstRows objectAtIndex:i] objectAtIndex:j];
+                        label.backgroundColor = [UIColor yellowColor];
+                        if (j == currentColumn1) {
+                            label.backgroundColor = [UIColor whiteColor];
+                        }
+                    }
+                }
+                
+                for (UILabel *label in [firstRows objectAtIndex:0]) {
+                    label.backgroundColor = [UIColor whiteColor];
+                }
+                
+                detLabel1.textColor = [UIColor redColor];
+                detLabel2.textColor = [UIColor greenColor];
+                detLabel3.textColor = [UIColor greenColor];
+                detLabel4.textColor = [UIColor redColor];
+                
+                NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"= (%@ x %@) - (%@ x %@)\n= %.2f", [[detMatrix.elements objectAtIndex:0] objectAtIndex:0], [[detMatrix.elements objectAtIndex:1] objectAtIndex:1], [[detMatrix.elements objectAtIndex:0] objectAtIndex:1], [[detMatrix.elements objectAtIndex:1] objectAtIndex:0], [detMatrix determinant:detMatrix]]];
+                
+                [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(3, firstDetBracketValue)];
+                [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(8 + firstDetBracketValue, secondDetBracketValue)];
+                
+                detCalculation.attributedText = attributedText;
             } else {
                 determinantAnswer = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"(%@ x %.2f) - (%@ x %.2f) + (%@ x %.2f) = %.2f", [[firstMatrix.elements objectAtIndex:0] objectAtIndex:0], [detMatrix1 determinant:detMatrix1], [[firstMatrix.elements objectAtIndex:0] objectAtIndex:1], [detMatrix2 determinant:detMatrix2], [[firstMatrix.elements objectAtIndex:0] objectAtIndex:2], [detMatrix3 determinant:detMatrix3], [firstMatrix determinant:firstMatrix]]];
                 self.navigationItem.rightBarButtonItem.enabled = NO;
@@ -765,12 +851,14 @@
 
 - (void)performInverse
 {
+    NSLog(@"%d %d", currentRow1, currentColumn1);
+    
     float determinant = [firstMatrix determinant:firstMatrix];
     
     Matrix *inverseMatrix = [[Matrix alloc] init];
     
     Matrix *detMatrix = [[Matrix alloc] init];
-    if (firstMatrix.row > 1) {
+    if (firstMatrix.row == 3) {
         detMatrix = [firstMatrix determinantMatrix:firstMatrix row:currentRow1 column:currentColumn1];
     }
     
@@ -783,6 +871,18 @@
     transposedMatrix.row = firstMatrix.row;
     transposedMatrix.column = firstMatrix.column;
     [transposedMatrix initialise];
+    
+    NSInteger firstBracketValue, secondBracketValue, firstDetBracketValue, secondDetBracketValue;
+    
+    if (firstMatrix.row > 1) {
+        firstBracketValue = [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:0] objectAtIndex:0]] length] + 3 + [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:1] objectAtIndex:1]] length];
+        
+        secondBracketValue = [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:0] objectAtIndex:1]] length] + 3 + [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:1] objectAtIndex:0]] length];
+        
+        firstDetBracketValue = [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:0] objectAtIndex:0]] length] + 3 + [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:1]] length];
+        
+        secondDetBracketValue = [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:0] objectAtIndex:1]] length] + 3 + [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:0]] length];
+    }
     
     if (firstMatrix.row == 3) {
         for (int i = 0; i < cofactorMatrix.row; i++) {
@@ -814,7 +914,22 @@
             
             if (currentPos == 0) {
                 calculationString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\u0394 = (%@ x %@) - (%@ x %@) = %.2f", [[firstMatrix.elements objectAtIndex:0] objectAtIndex:0], [[firstMatrix.elements objectAtIndex:1] objectAtIndex:1], [[firstMatrix.elements objectAtIndex:0] objectAtIndex:1], [[firstMatrix.elements objectAtIndex:1] objectAtIndex:0], [firstMatrix determinant:firstMatrix]]];
+                
+                [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(5, firstBracketValue)];
+                [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(10 + firstBracketValue, secondBracketValue)];
+                
+                label1.textColor = [UIColor redColor];
+                label2.textColor = [UIColor greenColor];
+                label4.textColor = [UIColor greenColor];
+                label5.textColor = [UIColor redColor];
+                
             } else {
+                
+                label1.textColor = [UIColor blackColor];
+                label2.textColor = [UIColor blackColor];
+                label4.textColor = [UIColor blackColor];
+                label5.textColor = [UIColor blackColor];
+                
                 inverseMatrix = [firstMatrix inverse:firstMatrix];
                 calculationString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ \u00F7 %.2f = %.2f", [[inverseMatrix.elements objectAtIndex:currentRow1] objectAtIndex:currentColumn1], determinant, [inverseMatrix divideByDeterminant:inverseMatrix row:currentRow1 column:currentColumn1 determinant:determinant]]];
                 finalLabel.text = [NSString stringWithFormat:@"%.2f", [inverseMatrix divideByDeterminant:inverseMatrix row:currentRow1 column:currentColumn1 determinant:determinant]];
@@ -825,20 +940,54 @@
             }
             break;
         case 3:
-            if ((currentPos % 9 == 0) && (currentPos > 2)) {
-                currentRow1 = 0;
-                currentColumn1 = 0;
-            }
+//            if ((currentPos % 9 == 8) && (currentPos > 2)) {
+//                currentRow1 = 0;
+//                currentColumn1 = 0;
+//            }
             if (currentPos < 9) {
                 detLabel1.text = [NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:0] objectAtIndex:0]];
                 detLabel2.text = [NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:0] objectAtIndex:1]];
                 detLabel3.text = [NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:0]];
                 detLabel4.text = [NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:1]];
-                detCalculation.attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"= (%@ x %@) - (%@ x %@)\n= %.2f", [[detMatrix.elements objectAtIndex:0] objectAtIndex:0], [[detMatrix.elements objectAtIndex:1] objectAtIndex:1], [[detMatrix.elements objectAtIndex:0] objectAtIndex:1], [[detMatrix.elements objectAtIndex:1] objectAtIndex:0], [firstMatrix determinant:firstMatrix]]];
+                
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        UILabel *label = [[firstRows objectAtIndex:i] objectAtIndex:j];
+                        label.backgroundColor = [UIColor yellowColor];
+                        if (j == currentColumn1) {
+                            label.backgroundColor = [UIColor whiteColor];
+                        }
+                    }
+                }
+                
+                for (UILabel *label in [firstRows objectAtIndex:currentRow1]) {
+                    label.backgroundColor = [UIColor whiteColor];
+                }
+                
+                detLabel1.textColor = [UIColor redColor];
+                detLabel2.textColor = [UIColor greenColor];
+                detLabel3.textColor = [UIColor greenColor];
+                detLabel4.textColor = [UIColor redColor];
+                
+                NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"= (%@ x %@) - (%@ x %@)\n= %.2f", [[detMatrix.elements objectAtIndex:0] objectAtIndex:0], [[detMatrix.elements objectAtIndex:1] objectAtIndex:1], [[detMatrix.elements objectAtIndex:0] objectAtIndex:1], [[detMatrix.elements objectAtIndex:1] objectAtIndex:0], [detMatrix determinant:detMatrix]]];
+                
+                [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(3, firstDetBracketValue)];
+                [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(8 + firstDetBracketValue, secondDetBracketValue)];
+                
+                detCalculation.attributedText = attributedText;
+                
                 finalLabel.text = [NSString stringWithFormat:@"%.2f", [firstMatrix cofactor:firstMatrix row:currentRow1 column:currentColumn1]];
+                
+                if (currentPos == 8) {
+                    currentRow1 = 0;
+                    currentColumn1 = 0;
+                }
+                
             } else if (currentPos < 18) {
                 
                 if (currentPos == 9) {
+//                    currentRow1 = 0;
+//                    currentColumn1 = 0;
                     detBracketLeft.hidden = YES;
                     detLabel1.hidden = YES;
                     detLabel2.hidden = YES;
@@ -849,14 +998,25 @@
                     for (UILabel *label in finalLabels) {
                         label.text = @"";
                     }
+                    for (UILabel *label in firstLabels) {
+                        label.backgroundColor = [UIColor whiteColor];
+                    }
                     [headers replaceObjectAtIndex:2 withObject:@"Transposed"];
                 }
                 
                 [self.tableView reloadData];
                 finalLabel.text = [NSString stringWithFormat:@"%.2f", [firstMatrix transpose:cofactorMatrix row:currentRow1 column:currentColumn1]];
+                
+                if (currentPos == 17) {
+                    currentRow1 = 0;
+                    currentColumn1 = 0;
+                }
+                
             } else if (currentPos < 27) {
                 
                 if (currentPos == 18) {
+//                    currentRow1 = 0;
+//                    currentColumn1 = 0;
                     for (UILabel *label in finalLabels) {
                         label.text = @"";
                     }
@@ -880,8 +1040,143 @@
     if (currentColumn1 == (firstMatrix.column - 1)) {
         currentRow1++;
         currentColumn1 = 0;
-    } else {
+    } else if (currentPos % 9 != 8) {
         currentColumn1++;
+    }
+    
+    currentPos++;
+    
+    [self.tableView reloadData];
+}
+
+- (void)performAlgebra
+{
+    Matrix *detMatrix, *detMatrix1, *detMatrix2, *detMatrix3;
+
+    
+    id algebraElement;
+    
+    float a = 0;
+    
+    for (int i = 0; i < firstMatrix.row; i++) {
+        for (int j = 0; j < firstMatrix.column; j++) {
+            if ([[[firstMatrix.elements objectAtIndex:i] objectAtIndex:j] isKindOfClass:[NSString class]]) {
+                algebraElement = [[firstMatrix.elements objectAtIndex:i] objectAtIndex:j];
+                currentRow1 = i;
+                currentColumn1 = j;
+                a = [firstMatrix solveLinearEquation:firstMatrix row:i column:j];
+            }
+        }
+    }
+    
+    if ((currentPos < 3) && (firstMatrix.row == 3)) {
+        detMatrix = [firstMatrix determinantMatrix:firstMatrix row:currentRow1 column:currentPos];
+    }
+    
+    NSInteger firstBracketValue, secondBracketValue, firstDetBracketValue, secondDetBracketValue;
+    
+    if (firstMatrix.row > 1) {
+        firstBracketValue = [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:0] objectAtIndex:0]] length] + 3 + [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:1] objectAtIndex:1]] length];
+        
+        secondBracketValue = [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:0] objectAtIndex:1]] length] + 3 + [[NSString stringWithFormat:@"%@", [[firstMatrix.elements objectAtIndex:1] objectAtIndex:0]] length];
+        
+        firstDetBracketValue = [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:0] objectAtIndex:0]] length] + 3 + [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:1]] length];
+        
+        secondDetBracketValue = [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:0] objectAtIndex:1]] length] + 3 + [[NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:0]] length];
+    }
+    
+    switch (firstMatrix.row) {
+        case 1:
+            calculationString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a = %@", [[firstMatrix.elements objectAtIndex:0] objectAtIndex:0]]];
+            break;
+        case 2:
+            if (currentPos == 0) {
+                calculationString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"(%@ x %@) - (%@ x %@) = %@", [[firstMatrix.elements objectAtIndex:0] objectAtIndex:0], [[firstMatrix.elements objectAtIndex:1] objectAtIndex:1], [[firstMatrix.elements objectAtIndex:0] objectAtIndex:1], [[firstMatrix.elements objectAtIndex:1] objectAtIndex:0], [formatter stringFromNumber:[NSNumber numberWithFloat:firstMatrix.det]]]];
+                
+                [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(1, firstBracketValue)];
+                [calculationString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(6 + firstBracketValue, secondBracketValue)];
+                
+                label1.textColor = [UIColor redColor];
+                label2.textColor = [UIColor greenColor];
+                label4.textColor = [UIColor greenColor];
+                label5.textColor = [UIColor redColor];
+                
+            } else if (currentPos == 1) {
+                determinantAnswer = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a = %@", [formatter stringFromNumber:[NSNumber numberWithFloat:a]]]];
+                
+                self.navigationItem.rightBarButtonItem.enabled = NO;
+            }
+            
+            break;
+            
+        case 3:
+            detMatrix1 = [firstMatrix determinantMatrix:firstMatrix row:currentRow1 column:0];
+            detMatrix2 = [firstMatrix determinantMatrix:firstMatrix row:currentRow1 column:1];
+            detMatrix3 = [firstMatrix determinantMatrix:firstMatrix row:currentRow1 column:2];
+            if (currentPos < 3) {
+                detLabel1.text = [NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:0] objectAtIndex:0]];
+                detLabel2.text = [NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:0] objectAtIndex:1]];
+                detLabel3.text = [NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:0]];
+                detLabel4.text = [NSString stringWithFormat:@"%@", [[detMatrix.elements objectAtIndex:1] objectAtIndex:1]];
+                
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        UILabel *label = [[firstRows objectAtIndex:i] objectAtIndex:j];
+                        label.backgroundColor = [UIColor yellowColor];
+                        if (j == currentPos) {
+                            label.backgroundColor = [UIColor whiteColor];
+                        }
+                    }
+                }
+                
+                for (UILabel *label in [firstRows objectAtIndex:currentRow1]) {
+                    label.backgroundColor = [UIColor whiteColor];
+                }
+                
+                detLabel1.textColor = [UIColor redColor];
+                detLabel2.textColor = [UIColor greenColor];
+                detLabel3.textColor = [UIColor greenColor];
+                detLabel4.textColor = [UIColor redColor];
+                
+                NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"= (%@ x %@) - (%@ x %@)\n= %.2f", [[detMatrix.elements objectAtIndex:0] objectAtIndex:0], [[detMatrix.elements objectAtIndex:1] objectAtIndex:1], [[detMatrix.elements objectAtIndex:0] objectAtIndex:1], [[detMatrix.elements objectAtIndex:1] objectAtIndex:0], [detMatrix determinant:detMatrix]]];
+                
+                [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(3, firstDetBracketValue)];
+                [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(8 + firstDetBracketValue, secondDetBracketValue)];
+                
+                detCalculation.attributedText = attributedText;
+                
+            } else if (currentPos == 3) {
+                
+                for (UILabel *label in firstLabels) {
+                    label.backgroundColor = [UIColor whiteColor];
+                }
+                
+                detBracketLeft.hidden = YES;
+                detBracketRight.hidden = YES;
+                
+                for (UILabel *label in detLabels) {
+                    label.hidden = YES;
+                }
+                
+                detCalculation.hidden = YES;
+                
+                if (currentRow1 == 1) {
+                    calculationString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"- (%@ x %.2f) + (%@ x %.2f) - (%@ x %.2f) = %.2f", [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:0], [detMatrix1 determinant:detMatrix1], [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:1], [detMatrix2 determinant:detMatrix2], [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:2], [detMatrix3 determinant:detMatrix3], firstMatrix.det]];
+                } else {
+                    calculationString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"(%@ x %.2f) - (%@ x %.2f) + (%@ x %.2f) = %.2f", [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:0], [detMatrix1 determinant:detMatrix1], [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:1], [detMatrix2 determinant:detMatrix2], [[firstMatrix.elements objectAtIndex:currentRow1] objectAtIndex:2], [detMatrix3 determinant:detMatrix3], firstMatrix.det]];
+                }
+                
+            } else {
+                
+                determinantAnswer = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a = %@", [formatter stringFromNumber:[NSNumber numberWithFloat:a]]]];
+                
+                self.navigationItem.rightBarButtonItem.enabled = NO;
+                
+            }
+            
+            break;
+        default:
+            break;
     }
     
     currentPos++;

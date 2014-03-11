@@ -30,9 +30,9 @@
     [super viewDidLoad];
     
     if (selectedType == 0)
-        headers = [[NSMutableArray alloc] initWithObjects:@"Choose operation", @"Choose matrices", nil];
+        headers = [[NSMutableArray alloc] initWithObjects:@"Choose operation", @"Choose matrix", nil];
     else {
-        headers = [[NSMutableArray alloc] initWithObjects:@"Choose operation", @"Choose transformations", nil];
+        headers = [[NSMutableArray alloc] initWithObjects:@"Choose operation", @"Choose transformation", nil];
     }
     
     types = [[NSMutableArray alloc] initWithObjects:@"Matrix to transformation", @"Transformation to matrix", nil];
@@ -46,10 +46,6 @@
     
     inputPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, 162)];
     inputPicker.delegate = self;
-    
-//    [inputPicker selectRow:selectedInput inComponent:0 animated:YES];
-    
-//    [inputPicker reloadAllComponents];
     
     matrixNames = [[NSMutableArray alloc] init];
     transformationNames = [[NSMutableArray alloc] init];
@@ -100,13 +96,17 @@
         transformation = [[NSMutableDictionary alloc] init];
     }
     
+    [inputPicker selectRow:selectedInput inComponent:0 animated:YES];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    NSLog(@"%@", matrixNames);
+//    NSLog(@"%@", matrixNames);
+    
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)didReceiveMemoryWarning

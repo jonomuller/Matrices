@@ -16,7 +16,7 @@
 #import "OutputTableViewController.h"
 #import "Matrix.h"
 
-@interface TransformationMasterViewController : UITableViewController <ListTableViewDelegate, TransformationListTableViewDelegate, SelectTableViewDelegate, OutputTableViewDelegate>
+@interface TransformationMasterViewController : UITableViewController <ListTableViewDelegate, TransformationListTableViewDelegate, SelectTableViewDelegate/*, OutputTableViewDelegate*/>
 
 @property (strong, nonatomic) NSMutableArray *options, *matrices, *transformations;
 

@@ -20,7 +20,7 @@
 
 @implementation MatrixTableViewController
 
-@synthesize rowsInSection, headers, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9, textField10, textField11, nameTextField, leftBracket, rightBracket, alert, matrices, delegate, indexPathRow, fromButton, valid;
+@synthesize rowsInSection, headers, textField1, textField2, textField3, textField4, textField5, textField6, textField7, textField8, textField9, textField10, textField11, nameTextField, leftBracket, rightBracket, alert, matrices, delegate, indexPathRow, fromButton, valid, algebraSwitch, detTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -46,7 +46,7 @@
         matrix = [[Matrix alloc] init];
     }
     
-    rowsInSection = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:1], [NSNumber numberWithInt:2], [NSNumber numberWithInt:1], nil];
+    rowsInSection = [[NSMutableArray alloc] initWithObjects:@1, @2, @2, nil];
     headers = [[NSMutableArray alloc] initWithObjects:@"Name", @"Matrix size", @"Matrix elements", nil];
     
     textField1 = [[UITextField alloc] initWithFrame:CGRectMake(15, 5, 290, 34)];
@@ -63,6 +63,8 @@
     textField11 = [[UITextField alloc] initWithFrame:CGRectMake(145, 93, 50, 34)];
     
     nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, 5, 290, 34)];
+    
+    detTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, 5, 290, 34)];
     
     returnFields = [[NSMutableArray alloc] initWithObjects:nameTextField, textField1, textField2, nil];
     
@@ -90,6 +92,10 @@
     nameTextField.placeholder = @"tap to enter name";
     nameTextField.delegate = self;
     
+    detTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    detTextField.placeholder = @"tap to enter value";
+    detTextField.delegate = self;
+    
     [textField1 addTarget:self action:@selector(textField1Changed:) forControlEvents:UIControlEventEditingChanged];
     [textField2 addTarget:self action:@selector(textField2Changed:) forControlEvents:UIControlEventEditingChanged];
     
@@ -105,9 +111,15 @@
     
     [nameTextField addTarget:self action:@selector(nameTextFieldChanged:) forControlEvents:UIControlEventEditingChanged];
     
+    [detTextField addTarget:self action:@selector(detTextFieldChanged:) forControlEvents:UIControlEventEditingChanged];
+    
     firstRow = @[textField3, textField4, textField5];
     secondRow = @[textField6, textField7, textField8];
     thirdRow = @[textField9, textField10, textField11];
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.usesSignificantDigits = TRUE;
+    formatter.minimumSignificantDigits = 1;
     
     if ((!fromButton) && ([matrices count] > 0)) {
         textField1.text = [NSString stringWithFormat:@"%d", matrix.row];
@@ -134,6 +146,7 @@
                     break;
             }
         }
+        detTextField.text = [NSString stringWithFormat:@"%@", [formatter stringFromNumber:[NSNumber numberWithFloat:matrix.det]]];
         
         [self generateMatrixFields:matrix.row numberOfColumns:matrix.column];
     }
@@ -151,7 +164,25 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButton:)];
     
-    self.navigationItem.rightBarButtonItem.enabled = NO;}
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.navigationController.navigationBar.translucent = NO;
+    
+    algebraSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(251, 6, 51, 31)];
+    [algebraSwitch addTarget:self action:@selector(switchChanged) forControlEvents:UIControlEventValueChanged];
+    
+    if (!fromButton) {
+        if (matrix.useAlgebra) {
+        algebraSwitch.on = TRUE;
+        [rowsInSection addObject:@1];
+        [headers addObject:@"Determinant"];
+        [self.tableView reloadData];
+    } else {
+        algebraSwitch.on = FALSE;
+        detTextField.text = @"";
+        [self.tableView reloadData];
+    }
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -175,7 +206,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ((indexPath.section == 2) && (matrix.row != 0)) {
+    if ((indexPath.section == 2) && (indexPath.row == 0) && (matrix.row != 0)) {
         return matrix.row * 44;
     }
     return 44;
@@ -189,12 +220,24 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    cell.textLabel.text = @"";
+    
+    UIButton *info = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    info.frame = CGRectMake(115, 12, 20, 20);
+    [info addTarget:self action:@selector(infoButton:) forControlEvents:UIControlEventTouchUpInside];
+    
     if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
         for (UITextField *field in textFields) {
             [cell addSubview:field];
         }
         [cell addSubview:leftBracket];
         [cell addSubview:rightBracket];
+        } else if (indexPath.row == 1) {
+            [cell addSubview:algebraSwitch];
+            [cell addSubview:info];
+            cell.textLabel.text = @"Use algebra";
+        }
     } else if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             [cell addSubview:nameTextField];
@@ -202,9 +245,7 @@
             cell.contentView.backgroundColor = self.tableView.backgroundColor;
             cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, cell.bounds.size.width);
         }
-    }
-    
-    if (indexPath.section == 1) {
+    } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             cell.detailTextLabel.text = @"no. of rows";
             [cell.contentView addSubview:textField1];
@@ -212,9 +253,9 @@
             cell.detailTextLabel.text = @"no. of columns";
             [cell.contentView addSubview:textField2];
         }
+    } else {
+        [cell addSubview:detTextField];
     }
-    
-    cell.textLabel.text = @"";
     
     return cell;
 }
@@ -315,66 +356,155 @@
 {
     [self enableSaveButton];
     matrix.row = [textField1.text intValue];
+    
+    if (matrix.column != 0) {
+        [matrix initialise];
+        if ((matrix.row < 4) && (matrix.row > 0)) {
+            [self generateMatrixFields:matrix.row numberOfColumns:matrix.column];
+            for (UITextField *field in textFields) {
+                field.text = @"";
+            }
+            [self.tableView reloadData];
+        }
+    }
+
 }
 
 - (IBAction)textField2Changed:(id)sender
 {
     [self enableSaveButton];
+    [matrix initialise];
     matrix.column = [textField2.text intValue];
+    
+    if (matrix.row != 0) {
+        [matrix initialise];
+        if ((matrix.column < 4) && (matrix.column > 0)) {
+            [self generateMatrixFields:matrix.row numberOfColumns:matrix.column];
+            for (UITextField *field in textFields) {
+                field.text = @"";
+            }
+            [self.tableView reloadData];
+        }
+    }
+    
+    NSLog(@"%@", matrix.elements);
 }
 
 - (IBAction)textField3Changed:(id)sender
 {
     [self enableSaveButton];
-    [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:0 withObject:[NSNumber numberWithFloat:[textField3.text floatValue]]];
+    
+    NSScanner *scan = [NSScanner scannerWithString:textField3.text];
+    
+    if ([scan scanFloat:NULL]) {
+        [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:0 withObject:[NSNumber numberWithFloat:[textField3.text floatValue]]];
+    } else {
+        [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:0 withObject:textField3.text];
+    }
 }
 
 - (IBAction)textField4Changed:(id)sender
 {
     [self enableSaveButton];
-    [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:1 withObject:[NSNumber numberWithFloat:[textField4.text floatValue]]];
+    
+    NSScanner *scan = [NSScanner scannerWithString:textField4.text];
+    
+    if ([scan scanFloat:NULL]) {
+        [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:1 withObject:[NSNumber numberWithFloat:[textField4.text floatValue]]];
+    } else {
+        [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:1 withObject:textField4.text];
+    }
 }
 
 - (IBAction)textField5Changed:(id)sender
 {
     [self enableSaveButton];
-    [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:2 withObject:[NSNumber numberWithFloat:[textField5.text floatValue]]];
+    
+    NSScanner *scan = [NSScanner scannerWithString:textField5.text];
+    
+    if ([scan scanFloat:NULL]) {
+        [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:2 withObject:[NSNumber numberWithFloat:[textField5.text floatValue]]];
+    } else {
+        [[matrix.elements objectAtIndex:0] replaceObjectAtIndex:2 withObject:textField5.text];
+    }
 }
 
 - (IBAction)textField6Changed:(id)sender
 {
     [self enableSaveButton];
-    [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:0 withObject:[NSNumber numberWithFloat:[textField6.text floatValue]]];
+    
+    NSScanner *scan = [NSScanner scannerWithString:textField6.text];
+    
+    if ([scan scanFloat:NULL]) {
+        [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:0 withObject:[NSNumber numberWithFloat:[textField6.text floatValue]]];
+    } else {
+        [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:0 withObject:textField6.text];
+    }
 }
 
 - (IBAction)textField7Changed:(id)sender
 {
     [self enableSaveButton];
-    [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:1 withObject:[NSNumber numberWithFloat:[textField7.text floatValue]]];
+
+    NSScanner *scan = [NSScanner scannerWithString:textField7.text];
+    
+    if ([scan scanFloat:NULL]) {
+        [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:1 withObject:[NSNumber numberWithFloat:[textField7.text floatValue]]];
+    } else {
+        [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:1 withObject:textField7.text];
+    }
 }
 
 - (IBAction)textField8Changed:(id)sender
 {
     [self enableSaveButton];
-    [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:2 withObject:[NSNumber numberWithFloat:[textField8.text floatValue]]];
+
+    NSScanner *scan = [NSScanner scannerWithString:textField8.text];
+    
+    if ([scan scanFloat:NULL]) {
+        [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:2 withObject:[NSNumber numberWithFloat:[textField8.text floatValue]]];
+    } else {
+        [[matrix.elements objectAtIndex:1] replaceObjectAtIndex:2 withObject:textField8.text];
+    }
 }
 
 - (IBAction)textField9Changed:(id)sender
 {
     [self enableSaveButton];
-    [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:0 withObject:[NSNumber numberWithFloat:[textField9.text floatValue]]];
+    
+    NSScanner *scan = [NSScanner scannerWithString:textField9.text];
+    
+    if ([scan scanFloat:NULL]) {
+        [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:0 withObject:[NSNumber numberWithFloat:[textField9.text floatValue]]];
+    } else {
+        [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:0 withObject:textField9.text];
+    }
 }
 
 - (IBAction)textField10Changed:(id)sender
 {
     [self enableSaveButton];
-    [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:1 withObject:[NSNumber numberWithFloat:[textField10.text floatValue]]];
+
+    NSScanner *scan = [NSScanner scannerWithString:textField10.text];
+    
+    if ([scan scanFloat:NULL]) {
+        [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:1 withObject:[NSNumber numberWithFloat:[textField10.text floatValue]]];
+    } else {
+        [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:1 withObject:textField10.text];
+    }
 }
 
 - (IBAction)textField11Changed:(id)sender
 {
     [self enableSaveButton];
-    [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:2 withObject:[NSNumber numberWithFloat:[textField11.text floatValue]]];
+
+    NSScanner *scan = [NSScanner scannerWithString:textField11.text];
+    
+    if ([scan scanFloat:NULL]) {
+        [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:2 withObject:[NSNumber numberWithFloat:[textField11.text floatValue]]];
+    } else {
+        [[matrix.elements objectAtIndex:2] replaceObjectAtIndex:2 withObject:textField11.text];
+    }
 }
 
 - (IBAction)nameTextFieldChanged:(id)sender
@@ -383,6 +513,11 @@
     matrix.name = nameTextField.text;
 }
 
+- (IBAction)detTextFieldChanged:(id)sender
+{
+    [self enableSaveButton];
+    matrix.det = [detTextField.text floatValue];
+}
 #pragma mark - Save button
 
 - (IBAction)saveButton:(id)sender
@@ -433,6 +568,14 @@
     }
 }
 
+#pragma mark - Info button
+
+- (IBAction)infoButton:(id)sender
+{
+    UIAlertView *info = [[UIAlertView alloc] initWithTitle:@"Algebra" message:@"Use the letter 'a' to denote one of the elements in the matrix" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NULL, nil];
+    [info show];
+}
+
 #pragma mark - Generate matrix fields
 
 - (void)generateMatrixFields:(int)row numberOfColumns:(int)column
@@ -440,14 +583,14 @@
     BOOL allEmpty = TRUE;
     
     for (UITextField *field in textFields) {
-        if (![field.text isEqualToString:@""]) {
+        if ([field.text isEqualToString:@""]) {
             allEmpty = FALSE;
         }
     }
-    
-    if ((allEmpty) && (fromButton)) {
-        [matrix initialise];
-    }
+//    
+//    if ((fromButton)) {
+//        [matrix initialise];
+//    }
     
     initial++;
     
@@ -533,12 +676,30 @@
     
     [self.tableView reloadData];
     
-    
     UIApplication *application = [UIApplication sharedApplication];
     NSURL *url = [NSURL URLWithString:@"limeify://"];
     
     if (([matrix.name isEqualToString:@"limeify"]) || ([matrix.name isEqualToString:@"Limeify"])) {
         [application openURL:url];
+    }
+}
+
+#pragma mark - Switch value changed
+
+- (void)switchChanged
+{
+    if (algebraSwitch.on) {
+        matrix.useAlgebra = TRUE;
+        [rowsInSection addObject:@1];
+        [headers addObject:@"Determinant"];
+        [self.tableView reloadData];
+        [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height) animated:YES];
+    } else {
+        matrix.useAlgebra = FALSE;
+        [rowsInSection removeObjectAtIndex:3];
+        [headers removeObjectAtIndex:3];
+        detTextField.text = @"";
+        [self.tableView reloadData];
     }
 }
 
@@ -584,17 +745,20 @@
 - (void)checkIfMatrixIsValid
 {
     UIAlertView *matrixError = [[UIAlertView alloc] initWithTitle:@"Validation error"
-                                                          message:@"Please enter an integer"
+                                                          message:@"Please enter a number"
                                                          delegate:self
                                                 cancelButtonTitle:@"OK"
                                                 otherButtonTitles:NULL, nil];
-    
-    for (UITextField *field in textFields) {
-        if ([field isFirstResponder]) {
-            NSScanner *scan = [NSScanner scannerWithString:field.text];
-            if (![scan scanInt:NULL]) {
-                [matrixError show];
-                field.text = @"";
+    if (matrix.useAlgebra) {
+        
+    } else {
+        for (UITextField *field in textFields) {
+            if ([field isFirstResponder]) {
+                NSScanner *scan = [NSScanner scannerWithString:field.text];
+                if (![scan scanInt:NULL]) {
+                    [matrixError show];
+                    field.text = @"";
+                }
             }
         }
     }

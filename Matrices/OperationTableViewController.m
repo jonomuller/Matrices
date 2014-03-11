@@ -32,7 +32,7 @@
 {
     [super viewDidLoad];
     
-    operations = [[NSMutableArray alloc] initWithObjects:@"Addition", @"Subtraction", @"Multiplication", @"Find determinant", @"Find inverse", nil];
+    operations = [[NSMutableArray alloc] initWithObjects:@"Addition", @"Subtraction", @"Multiplication", @"Determinant", @"Inverse", @"Algebra element", nil];
     
     listOfOperations = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, 162)];
     listOfOperations.delegate = self;
@@ -60,6 +60,8 @@
     if (operationIndex < 3) {
         [listOfMatrices selectRow:secondMatrixIndex inComponent:2 animated:YES];
     }
+    
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)didReceiveMemoryWarning

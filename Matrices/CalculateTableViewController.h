@@ -12,7 +12,8 @@
 @interface CalculateTableViewController : UITableViewController <UIAlertViewDelegate>
 {
     Matrix *firstMatrix, *secondMatrix, *finalMatrix;
-    NSArray *allLabels, *finalLabels, *firstLabels, *secondLabels, *firstRow, *secondRow, *thirdRow, *firstRow2, *secondRow2, *thirdRow2, *finalRow1, *finalRow2, *finalRow3, *finalRows, *firstRows, *secondRows;
+    NSArray *allLabels, *finalLabels, *firstLabels, *secondLabels, *firstRow, *secondRow, *thirdRow, *firstRow2, *secondRow2, *thirdRow2, *finalRow1, *finalRow2, *finalRow3, *finalRows, *firstRows, *secondRows, *detLabels;
+    NSNumberFormatter *formatter;
 }
 
 @property (strong, nonatomic) NSMutableArray *headers, *matrices;
@@ -30,5 +31,6 @@
 - (void)performMulitplcation;
 - (void)performDeterminant;
 - (void)performInverse;
+- (void)performAlgebra;
 
 @end

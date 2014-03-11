@@ -41,6 +41,7 @@
     matrix = [[Matrix alloc] init];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButton:)];
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -100,7 +101,7 @@
 {
     [self.tableView beginUpdates];
     [matrices removeObjectAtIndex:indexPath.row];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
 }
 
@@ -133,11 +134,10 @@
     UITableViewCell *cell = (UITableViewCell*)sender;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     matrix = [matrices objectAtIndex:indexPath.row];
-    NSString *title = matrix.name;
     
     MatrixTableViewController *controller = [segue destinationViewController];
     controller.delegate = self;
-    controller.navigationItem.title = title;
+    controller.navigationItem.title = @"Edit matrix";
     controller.indexPathRow = indexPath.row;
     controller.matrices = matrices;
     controller.fromButton = NO;
@@ -157,7 +157,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     MatrixTableViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"matrixController"];
     controller.delegate = self;
-    controller.title = @"Add matrix";
+    controller.title = @"Enter matrix";
     controller.matrices = matrices;
     controller.fromButton = YES;
     [self.navigationController pushViewController:controller animated:YES];

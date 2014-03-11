@@ -27,18 +27,18 @@
 
 - (void)viewDidLoad
 {
-    UIAlertView *noMatrices = [[UIAlertView alloc] initWithTitle:@"No matrices found" message:@"Please add enter at least one matrix or transformation first" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NULL, nil];
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    UIAlertView *noMatrices = [[UIAlertView alloc] initWithTitle:@"No inputs found" message:@"Please enter at least one matrix or transformation first" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NULL, nil];
     
     UIAlertView *wrongSize = [[UIAlertView alloc] initWithTitle:@"Wrong size for matrix" message:@"Please enter a matrix of size 2x2" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NULL, nil];
     
-    if (!matrix.name) {
+    if (!matrix) {
         [noMatrices show];
     } else if (matrix.row != 2 || matrix.column != 2) {
         [wrongSize show];
     }
-    
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     scroller.contentSize = CGSizeMake(kDefaultGraphWidth, kGraphHeight);
     scroller.maximumZoomScale = 4.0;
@@ -63,6 +63,13 @@
 {
     return graphView;
 }
+
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+#pragma mark - Alert View delegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

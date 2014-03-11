@@ -29,7 +29,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Home";
+    self.title = @"Operations";
     
     options = [[NSMutableArray alloc] initWithObjects:@"Matrices", @"Operation", @"Calculate", nil];
 }
@@ -189,7 +189,6 @@
 {
     secondMatrixIndex = row;
 }
-
 
 - (void)passBackMatricesArray:(NSMutableArray *)array
 {

@@ -9,15 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "Matrix.h"
 
-@protocol OutputTableViewDelegate <NSObject>
+//@protocol OutputTableViewDelegate <NSObject>
+//
+//- (void)passBackMatrix:(Matrix *)output;
+//
+//@end
 
-- (void)passBackMatrix:(Matrix *)output;
+@interface OutputTableViewController : UITableViewController <UIAlertViewDelegate>
 
-@end
-
-@interface OutputTableViewController : UITableViewController
-
-@property (weak, nonatomic) id <OutputTableViewDelegate> delegate;
+//@property (weak, nonatomic) id <OutputTableViewDelegate> delegate;
 
 @property (strong, nonatomic) NSMutableArray *headers, *matrices, *transformations;
 

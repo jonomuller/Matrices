@@ -42,13 +42,15 @@
     
     self.title = @"Transformations";
     
-    options = [[NSMutableArray alloc] initWithObjects:@"Matrices", @"Transformations", @"Select", @"Output", @"Display on graph", nil];
+    options = [[NSMutableArray alloc] initWithObjects:@"Matrices", @"Transformations", @"Select input", @"Output", @"Display on graph", nil];
     
     matrix = [[Matrix alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self.tableView reloadData];
+    
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     matrices = appDelegate.matrices;
     NSLog(@"%@", matrices);
@@ -83,9 +85,21 @@
     }
     
     // Configure the cell...
-    
+        
     cell.textLabel.text = [options objectAtIndex:indexPath.row];
-    cell.detailTextLabel.text = @"";
+    
+    if (indexPath.row == 2) {
+        if (selectedType == 0) {
+            cell.detailTextLabel.text = @"Matrix";
+        } else {
+            cell.detailTextLabel.text = @"Transformation";
+        }
+    } else if (indexPath.row == 3) {
+        cell.detailTextLabel.text = @"";
+    } else {
+        cell.detailTextLabel.text = @"";
+    }
+    
     cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
     
     return cell;
@@ -100,6 +114,8 @@
     SelectTableViewController *controller3 = [storyboard instantiateViewControllerWithIdentifier:@"selectTransformationController"];
     OutputTableViewController *controller4 = [storyboard instantiateViewControllerWithIdentifier:@"outputController"];
     GraphViewController *controller5 = [storyboard instantiateViewControllerWithIdentifier:@"graphViewController"];
+    
+    NSMutableDictionary *transformation = [transformations objectAtIndex:selectedInput];
     
     switch (indexPath.row) {
         case 0:
@@ -139,7 +155,7 @@
         case 4:
             controller5.title = [options objectAtIndex:indexPath.row];
             if (selectedType == 1) {
-                controller5.matrix = matrix;
+                controller5.matrix = [matrix convertTransformationToMatrix:transformation];
                 NSLog(@"name: %@", matrix.elements);
             } else {
                 if ([matrices count] > 0) {
@@ -217,10 +233,10 @@
     transformations = array;
 }
 
-- (void)passBackMatrix:(Matrix *)output
-{
-    matrix = output;
-}
+//- (void)passBackMatrix:(Matrix *)output
+//{
+//    matrix = output;
+//}
 
 #pragma mark - Navigation
 

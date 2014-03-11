@@ -24,9 +24,11 @@
 @property (strong, nonatomic) UIAlertView *alert;
 @property (nonatomic) NSInteger indexPathRow;
 
-@property (strong, nonatomic) IBOutlet UITextField *textField1, *textField2, *textField3, *textField4, *textField5, *textField6, *textField7, *textField8, *textField9, *textField10, *textField11, *nameTextField;
+@property (strong, nonatomic) IBOutlet UITextField *textField1, *textField2, *textField3, *textField4, *textField5, *textField6, *textField7, *textField8, *textField9, *textField10, *textField11, *nameTextField, *detTextField;
 
 @property (strong, nonatomic) IBOutlet UIImageView *leftBracket, *rightBracket;
+
+@property (strong, nonatomic) IBOutlet UISwitch *algebraSwitch;
 
 - (IBAction)textField1Changed:(id)sender;
 - (IBAction)textField2Changed:(id)sender;
@@ -42,10 +44,15 @@
 
 - (IBAction)nameTextFieldChanged:(id)sender;
 
+- (IBAction)detTextFieldChanged:(id)sender;
+
 - (IBAction)saveButton:(id)sender;
+- (IBAction)infoButton:(id)sender;
 
 - (void)dismissKeyboard;
 - (void)generateMatrixFields:(int)row numberOfColumns:(int)column;
+
+- (void)switchChanged;
 
 - (void)enableSaveButton;
 

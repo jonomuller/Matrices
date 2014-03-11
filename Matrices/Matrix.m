@@ -10,7 +10,7 @@
 
 @implementation Matrix
 
-@synthesize row, column, elements, name;
+@synthesize row, column, elements, name, det, useAlgebra;
 
 - (void)initialise
 {
@@ -33,6 +33,8 @@
     copy.column = column;
     copy.elements = elements;
     copy.name = name;
+    copy.det = det;
+    copy.useAlgebra = useAlgebra;
     return copy;
 }
 
@@ -168,15 +170,10 @@
     } else {
         for (int i = 0; i < matrix.row; i++) {
             for (int j = 0; j < matrix.row; j++) {
-                [[inverseMatrix.elements objectAtIndex:i] replaceObjectAtIndex:j withObject:[NSNumber numberWithFloat:[matrix cofactor:matrix row:i column:j]/* * negativeSign*/]];
+                [[inverseMatrix.elements objectAtIndex:i] replaceObjectAtIndex:j withObject:[NSNumber numberWithFloat:[matrix cofactor:matrix row:i column:j]]];
                 negativeSign*=-1;
             }
         }
-        //        NSLog(@"inv %@", inverseMatrix.elements);
-        
-        //        inverseMatrix = [inverseMatrix transpose:inverseMatrix];
-        
-        //        NSLog(@"inv2 %@", inverseMatrix.elements);
         for (int i = 0; i < matrix.row; i++) {
             for (int j = 0; j < matrix.row; j++) {
                 [[inverseMatrix.elements objectAtIndex:i] replaceObjectAtIndex:j withObject:[NSNumber numberWithFloat:[inverseMatrix divideByDeterminant:inverseMatrix row:i column:j determinant:determinant]]];
@@ -247,6 +244,118 @@
     element = element / determinant;
     
     return element;
+}
+
+- (float)solveLinearEquation:(Matrix *)matrix row:(NSInteger)currentRow column:(NSInteger)currentColumn
+{
+    float a = 0;
+    
+    Matrix *detMatrix;
+    
+    if (matrix.row == 3) {
+        detMatrix = [matrix determinantMatrix:matrix row:currentRow column:currentColumn];
+    }
+    
+    NSInteger oppositeRow, oppositeColumn, otherRow, otherColumn, otherOppositeRow, otherOppositeColumn;
+    
+    Matrix *detMatrix1, *detMatrix2, *detMatrix3;
+    
+    detMatrix1 = [matrix determinantMatrix:matrix row:currentRow column:0];
+
+    if (matrix.row == 3) {
+        detMatrix2 = [matrix determinantMatrix:matrix row:currentRow column:1];
+        detMatrix3 = [matrix determinantMatrix:matrix row:currentRow column:2];
+    } else if (matrix.row == 2) {
+        detMatrix2 = [matrix determinantMatrix:matrix row:currentRow column:1];
+    }
+    
+    switch (matrix.row) {
+        case 1:
+            a = [[[matrix.elements objectAtIndex:0] objectAtIndex:0] floatValue];
+            break;
+        case 2:
+            
+            if (currentRow == 0) {
+                oppositeRow = 1;
+                otherRow = 0;
+            } else {
+                oppositeRow = 0;
+                otherRow = 1;
+            }
+            
+            if (currentColumn == 0) {
+                oppositeColumn = 1;
+                otherColumn = 1;
+            } else {
+                oppositeColumn = 0;
+                otherColumn = 0;
+            }
+            
+            if (otherRow == 0) {
+                otherOppositeRow = 1;
+            } else {
+                otherOppositeRow = 0;
+            }
+            
+            if (otherColumn == 0) {
+                otherOppositeColumn = 1;
+            } else {
+                otherOppositeColumn = 0;
+            }
+            
+            if (((currentRow == 0) && (currentColumn == 1)) || ((currentRow == 1) && (currentColumn == 0))) {
+                a = matrix.det - ([[[matrix.elements objectAtIndex:otherRow] objectAtIndex:otherColumn] floatValue] * [[[matrix.elements objectAtIndex:otherOppositeRow] objectAtIndex:otherOppositeColumn] floatValue]);
+            } else {
+                a = matrix.det + ([[[matrix.elements objectAtIndex:otherRow] objectAtIndex:otherColumn] floatValue] * [[[matrix.elements objectAtIndex:otherOppositeRow] objectAtIndex:otherOppositeColumn] floatValue]);
+            }
+            
+            a = a / [[[matrix.elements objectAtIndex:oppositeRow] objectAtIndex:oppositeColumn] floatValue];
+            
+            if (((currentRow == 0) && (currentColumn == 1)) || ((currentRow == 1) && (currentColumn == 0))) {
+                a = -a;
+            }
+            break;
+        case 3:
+            if (currentRow == 1) {
+                switch (currentColumn) {
+                    case 0:
+                        a = [detMatrix2 determinant:detMatrix2] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:1] floatValue] - [detMatrix3 determinant:detMatrix3] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:2] floatValue] - matrix.det;
+                        a = a / [detMatrix1 determinant:detMatrix1];
+                        break;
+                    case 1:
+                        a = matrix.det + [detMatrix1 determinant:detMatrix1] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:0] floatValue] + [detMatrix3 determinant:detMatrix3] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:2] floatValue];
+                        a = a / [detMatrix2 determinant:detMatrix2];
+                        break;
+                    case 2:
+                        a = [detMatrix2 determinant:detMatrix2] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:1] floatValue] - [detMatrix1 determinant:detMatrix1] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:0] floatValue] - matrix.det;
+                        a = a / [detMatrix3 determinant:detMatrix3];
+                    default:
+                        break;
+                }
+                
+            } else {
+                switch (currentColumn) {
+                    case 0:
+                        a = matrix.det + [detMatrix2 determinant:detMatrix2] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:1] floatValue] - [detMatrix3 determinant:detMatrix3] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:2] floatValue];
+                        a = a / [detMatrix1 determinant:detMatrix1];
+                        break;
+                    case 1:
+                        a = [detMatrix1 determinant:detMatrix1] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:0] floatValue] + [detMatrix3 determinant:detMatrix3] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:2] floatValue] - matrix.det;
+                        a = a / [detMatrix2 determinant:detMatrix2];
+                        break;
+                    case 2:
+                        a = matrix.det + [detMatrix2 determinant:detMatrix2] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:1] floatValue] - [detMatrix1 determinant:detMatrix1] * [[[matrix.elements objectAtIndex:currentRow] objectAtIndex:0] floatValue];
+                        a = a / [detMatrix3 determinant:detMatrix3];
+                    default:
+                        break;
+                }
+            }
+            break;
+        default:
+            break;
+    }
+    
+    return a;
 }
 
 - (Matrix *)convertTransformationToMatrix:(NSMutableDictionary *)transformation

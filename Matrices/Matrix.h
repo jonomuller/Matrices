@@ -17,6 +17,10 @@
 
 @property (strong, nonatomic) NSString *name;
 
+@property (nonatomic) float det;
+
+@property (nonatomic) BOOL useAlgebra;
+
 - (void)initialise;
 - (Matrix *)copyMatrix;
 
@@ -33,7 +37,9 @@
 - (float)subtraction:(Matrix *)matrix subtract:(Matrix *)otherMatrix row:(NSInteger)rowPos column:(NSInteger)columnPos;
 - (float)multiplication:(Matrix *)matrix multiply:(Matrix *)otherMatrix row1:(NSInteger)rowPos1 column1:(NSInteger)columnPos1 row2:(NSInteger)rowPos2 column2:(NSInteger)columnPos2 numberOfColumns:(NSInteger)columns;
 
-- (Matrix *)convertTransformationToMatrix:(NSDictionary *)transformation;
+- (float)solveLinearEquation:(Matrix *)matrix row:(NSInteger)currentRow column:(NSInteger)currentColumn;
+
+- (Matrix *)convertTransformationToMatrix:(NSMutableDictionary *)transformation;
 - (NSMutableDictionary *)convertMatrixToTransformation:(Matrix *)matrix;
 
 @end

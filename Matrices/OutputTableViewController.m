@@ -14,7 +14,7 @@
 
 @implementation OutputTableViewController
 
-@synthesize headers, transformations, selectedInput, selectedType, matrices, matrix, transformation, outputMatrix, outputTransformation, delegate;
+@synthesize headers, transformations, selectedInput, selectedType, matrices, matrix, transformation, outputMatrix, outputTransformation/*, delegate*/;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -66,6 +66,14 @@
     } else {
         matrix = [matrix convertTransformationToMatrix:transformation];
     }
+    
+    UIAlertView *noMatrices = [[UIAlertView alloc] initWithTitle:@"No matrices found" message:@"Please enter at least one matrix first" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NULL, nil];
+    
+    if ((selectedType == 0) && ([matrices count] == 0)) {
+        [noMatrices show];
+    }
+    
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -201,7 +209,7 @@
         }
     }
     
-    [self.delegate passBackMatrix:matrix];
+//    [self.delegate passBackMatrix:matrix];
     
     return cell;
 }
@@ -255,5 +263,12 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Alert view delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 @end

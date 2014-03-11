@@ -90,6 +90,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButton:)];
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -100,7 +101,13 @@
 
 - (void)dismissKeyboard
 {
+    if (transformationIndex == 1) {
+        [self checkIfLineIsValid];
+    } else {
+        [self checkIfIntegerIsValid];
+    }
     
+    [self.tableView reloadData];
 }
 
 - (IBAction)saveButton:(id)sender
@@ -161,7 +168,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     
     // Configure the cell...
@@ -333,12 +339,16 @@
     
     UIAlertView *invalidLine = [[UIAlertView alloc] initWithTitle:@"Validation error" message:@"Please enter a valid equation" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NULL, nil];
     
-    if (([[textField.text substringToIndex:1] isEqualToString:@"y"]) || ([[textField.text substringToIndex:1] isEqualToString:@"x"])) {
-        check = TRUE;
-    } else {
-        [invalidLine show];
-        check = FALSE;
-        textField.text = @"";
+    NSString *line = textField.text;
+    
+    for (float i = -100; i < 100; i+=0.01) {
+        if (([line isEqualToString:[NSString stringWithFormat:@"y = %fx", i]]) || ([line isEqualToString:[NSString stringWithFormat:@"y=%fx", i]]) || ([line isEqualToString:@"y = 0"]) || ([line isEqualToString:@"y=0"]) || ([line isEqualToString:@"x = 0"]) || ([line isEqualToString:@"x=0"])) {
+            check = TRUE;
+        } else {
+            [invalidLine show];
+            check = FALSE;
+            textField.text = @"";
+        }
     }
     
     return check;
